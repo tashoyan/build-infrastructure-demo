@@ -17,7 +17,7 @@
 
     <modules>
         <module>build-resources</module>
-        <!--<module>lib</module>-->
+        <module>scala-lib</module>
         <!--<module>main</module>-->
         <!--<module>distribution</module>-->
     </modules>
@@ -388,6 +388,7 @@
                         <dependency>
                             <groupId>org.scalatest</groupId>
                             <artifactId>scalatest_${compiler.scala.compat.version}</artifactId>
+                            <version>${scalatest.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
