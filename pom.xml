@@ -7,18 +7,18 @@
     <artifactId>build-infrastructure-demo</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Build infrastructure demo</name>
+    <name>Build Infrastructure Demo</name>
     <description>Demonstrates code quality enforcement with Maven</description>
 
     <organization>
-        <name>Code Decency League</name>
+        <name>${distribution.vendor.name}</name>
         <url>https://github.com/tashoyan</url>
     </organization>
 
     <modules>
         <module>build-resources</module>
         <module>scala-lib</module>
-        <!--<module>main</module>-->
+        <module>java-main</module>
         <!--<module>distribution</module>-->
     </modules>
 
@@ -26,12 +26,17 @@
         <!--TODO Remove unused properties-->
 
         <!--TODO packaging properties-->
-        <distribution.product.name>PRODUCT_NAME</distribution.product.name>
-        <distribution.product.title>Product Title</distribution.product.title>
-        <distribution.package.name>PACKAGE_${distribution.product.name}</distribution.package.name>
-        <distribution.package.rpm.group>RPM_GROUP</distribution.package.rpm.group>
+        <distribution.vendor.full.name>Code Decency League</distribution.vendor.full.name>
+        <distribution.vendor.short.name>cdl</distribution.vendor.short.name>
+        <distribution.product.full.name>Build Infrastructure Demo</distribution.product.full.name>
+        <distribution.product.short.name>build-infra-demo</distribution.product.short.name>
+        <distribution.package.name>${distribution.vendor.short.name}-${distribution.product.short.name}</distribution.package.name>
+        <distribution.package.rpm.group>${distribution.vendor.short.name}</distribution.package.rpm.group>
         <distribution.package.build.number>MUST_COME_FROM_CI</distribution.package.build.number>
+        <!--release is the number of times this version of the software has been packaged.
+        http://ftp.rpm.org/max-rpm/ch-rpm-file-format.html -->
         <distribution.package.rpm.release>${distribution.package.build.number}</distribution.package.rpm.release>
+        <!--TODO Can we use distribution.package.zip.file instead and include '.zip' - same ways as for the rpm file?-->
         <distribution.package.zip.name>${distribution.package.name}-${distribution.version}-${distribution.package.build.number}</distribution.package.zip.name>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

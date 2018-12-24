@@ -1,0 +1,1 @@
+@{distribution.vendor.full.name} @{distribution.product.full.name} version @{distribution.version}
