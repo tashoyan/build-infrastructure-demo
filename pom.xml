@@ -21,8 +21,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <resources.filter.delimiter>@{*}</resources.filter.delimiter>
         <compiler.java.version>1.8</compiler.java.version>
-        <compiler.scala.version>2.11.12</compiler.scala.version>
-        <compiler.scala.compat.version>2.11</compiler.scala.compat.version>
+        <compiler.scala.version>2.12.8</compiler.scala.version>
+        <compiler.scala.compat.version>2.12</compiler.scala.compat.version>
 
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
@@ -38,169 +38,26 @@
         <scalastyle-maven-plugin.version>1.0.0</scalastyle-maven-plugin.version>
         <scalatest-maven-plugin.version>2.0.0</scalatest-maven-plugin.version>
 
-        <spark.version>2.4.0</spark.version>
-        <graphframes.version>0.6.0-spark2.2-s_${compiler.scala.compat.version}</graphframes.version>
-        <scopt.version>3.7.0</scopt.version>
-        <scalaj-http.version>2.4.1</scalaj-http.version>
         <scala-parser-combinators.version>1.0.4</scala-parser-combinators.version>
         <scalatest.version>3.0.4</scalatest.version>
         <scalactic.version>3.0.4</scalactic.version>
-        <guava.version>16.0.1</guava.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <commons-lang.version>2.6</commons-lang.version>
-        <snappy-java.version>1.1.7.1</snappy-java.version>
-        <httpclient.version>4.2.5</httpclient.version>
-        <httpcore.version>4.2.4</httpcore.version>
         <log4j.version>1.2.17</log4j.version>
         <slf4j.version>1.7.16</slf4j.version>
-        <avro.version>1.8.2</avro.version>
-        <xz.version>1.5</xz.version>
-        <hadoop.version>2.7.7</hadoop.version>
-        <jsr305.version>3.0.2</jsr305.version>
-        <curator-recipes.version>2.7.1</curator-recipes.version>
-        <commons-math3.version>3.4.1</commons-math3.version>
-        <netty-all.version>4.1.17.Final</netty-all.version>
-        <netty.version>3.9.9.Final</netty.version>
-        <commons-codec.version>1.10</commons-codec.version>
-        <activation.version>1.1.1</activation.version>
-        <paranamer.version>2.8</paranamer.version>
-        <codehaus.jackson.version>1.9.13</codehaus.jackson.version>
-        <fasterxml.jackson.version>2.6.7</fasterxml.jackson.version>
-        <fasterxml.jackson-databind.version>2.6.7.1</fasterxml.jackson-databind.version>
-        <scala-xml.version>1.0.6</scala-xml.version>
-        <commons-compress.version>1.8.1</commons-compress.version>
-        <commons-io.version>2.6</commons-io.version>
+
+        <build-resources.version>${project.version}</build-resources.version>
+        <checkstyle.version>8.10</checkstyle.version>
 
     </properties>
 
+    <!--TODO some dependency with commons-logging as a transitive dependency to illustrate exclusion-->
     <dependencyManagement>
         <dependencies>
-
-            <dependency>
-                <groupId>org.apache.spark</groupId>
-                <artifactId>spark-core_${compiler.scala.compat.version}</artifactId>
-                <version>${spark.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.spark-project.spark</groupId>
-                        <artifactId>unused</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.spark</groupId>
-                <artifactId>spark-sql_${compiler.scala.compat.version}</artifactId>
-                <version>${spark.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.spark-project.spark</groupId>
-                        <artifactId>unused</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.spark</groupId>
-                <artifactId>spark-catalyst_${compiler.scala.compat.version}</artifactId>
-                <version>${spark.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.spark-project.spark</groupId>
-                        <artifactId>unused</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.spark</groupId>
-                <artifactId>spark-mllib_${compiler.scala.compat.version}</artifactId>
-                <version>${spark.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.spark-project.spark</groupId>
-                        <artifactId>unused</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.spark</groupId>
-                <artifactId>spark-sql-kafka-0-10_${compiler.scala.compat.version}</artifactId>
-                <version>${spark.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.spark-project.spark</groupId>
-                        <artifactId>unused</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.spark</groupId>
-                <artifactId>spark-tags_${compiler.scala.compat.version}</artifactId>
-                <version>${spark.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.spark-project.spark</groupId>
-                        <artifactId>unused</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>graphframes</groupId>
-                <artifactId>graphframes</artifactId>
-                <version>${graphframes.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.hadoop</groupId>
-                <artifactId>hadoop-common</artifactId>
-                <version>${hadoop.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.hadoop</groupId>
-                <artifactId>hadoop-common</artifactId>
-                <type>test-jar</type>
-                <version>${hadoop.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.hadoop</groupId>
-                <artifactId>hadoop-hdfs</artifactId>
-                <type>test-jar</type>
-                <version>${hadoop.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
             <dependency>
                 <groupId>org.scala-lang</groupId>
                 <artifactId>scala-library</artifactId>
                 <version>${compiler.scala.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.scopt</groupId>
-                <artifactId>scopt_${compiler.scala.compat.version}</artifactId>
-                <version>${scopt.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.scalaj</groupId>
-                <artifactId>scalaj-http_${compiler.scala.compat.version}</artifactId>
-                <version>${scalaj-http.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.scala-lang.modules</groupId>
-                <artifactId>scala-parser-combinators_${compiler.scala.compat.version}</artifactId>
-                <version>${scala-parser-combinators.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -237,159 +94,28 @@
                 <artifactId>scalactic_${compiler.scala.compat.version}</artifactId>
                 <version>${scalactic.version}</version>
             </dependency>
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>${commons-io.version}</version>
-            </dependency>
 
             <!--BEGIN: Dependency convergence-->
-            <dependency>
-                <groupId>org.scala-lang</groupId>
-                <artifactId>scala-reflect</artifactId>
-                <version>${compiler.scala.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.hadoop</groupId>
-                <artifactId>hadoop-hdfs</artifactId>
-                <version>${hadoop.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.hadoop</groupId>
-                <artifactId>hadoop-annotations</artifactId>
-                <version>${hadoop.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-collections</groupId>
-                <artifactId>commons-collections</artifactId>
-                <version>${commons-collections.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-lang</groupId>
-                <artifactId>commons-lang</artifactId>
-                <version>${commons-lang.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.xerial.snappy</groupId>
-                <artifactId>snappy-java</artifactId>
-                <version>${snappy-java.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>${httpclient.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpcore</artifactId>
-                <version>${httpcore.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.avro</groupId>
-                <artifactId>avro</artifactId>
-                <version>${avro.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.tukaani</groupId>
-                <artifactId>xz</artifactId>
-                <version>${xz.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.code.findbugs</groupId>
-                <artifactId>jsr305</artifactId>
-                <version>${jsr305.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.curator</groupId>
-                <artifactId>curator-recipes</artifactId>
-                <version>${curator-recipes.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-math3</artifactId>
-                <version>${commons-math3.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-all</artifactId>
-                <version>${netty-all.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty</artifactId>
-                <version>${netty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>${commons-codec.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.activation</groupId>
-                <artifactId>activation</artifactId>
-                <version>${activation.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.thoughtworks.paranamer</groupId>
-                <artifactId>paranamer</artifactId>
-                <version>${paranamer.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-core-asl</artifactId>
-                <version>${codehaus.jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-mapper-asl</artifactId>
-                <version>${codehaus.jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-xc</artifactId>
-                <version>${codehaus.jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-jaxrs</artifactId>
-                <version>${codehaus.jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-core</artifactId>
-                <version>${fasterxml.jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${fasterxml.jackson-databind.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-annotations</artifactId>
-                <version>${fasterxml.jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-compress</artifactId>
-                <version>${commons-compress.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.scala-lang.modules</groupId>
-                <artifactId>scala-xml_${compiler.scala.compat.version}</artifactId>
-                <version>${scala-xml.version}</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.scala-lang</groupId>-->
+                <!--<artifactId>scala-reflect</artifactId>-->
+                <!--<version>${compiler.scala.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>commons-collections</groupId>-->
+                <!--<artifactId>commons-collections</artifactId>-->
+                <!--<version>${commons-collections.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>commons-lang</groupId>-->
+                <!--<artifactId>commons-lang</artifactId>-->
+                <!--<version>${commons-lang.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.scala-lang.modules</groupId>-->
+                <!--<artifactId>scala-xml_${compiler.scala.compat.version}</artifactId>-->
+                <!--<version>${scala-xml.version}</version>-->
+            <!--</dependency>-->
             <!--END: Dependency convergence-->
 
         </dependencies>
@@ -419,9 +145,36 @@
                 </plugin>
 
                 <plugin>
+                    <groupId>net.revelc.code.formatter</groupId>
+                    <artifactId>formatter-maven-plugin</artifactId>
+                    <version>${formatter-maven-plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.hp.ossa</groupId>
+                            <artifactId>build-resources</artifactId>
+                            <version>${build-resources.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <compilerCompliance>${compiler.java.version}</compilerCompliance>
+                        <compilerSource>${compiler.java.version}</compilerSource>
+                        <compilerTargetPlatform>${compiler.java.version}</compilerTargetPlatform>
+                        <lineEnding>LF</lineEnding>
+                        <configFile>java-formatter.xml</configFile>
+                    </configuration>
+                </plugin>
+
+                <plugin>
                     <groupId>org.scalastyle</groupId>
                     <artifactId>scalastyle-maven-plugin</artifactId>
                     <version>${scalastyle-maven-plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.hp.ossa</groupId>
+                            <artifactId>build-resources</artifactId>
+                            <version>${build-resources.version}</version>
+                        </dependency>
+                    </dependencies>
                     <configuration>
                         <verbose>false</verbose>
                         <failOnViolation>true</failOnViolation>
@@ -436,11 +189,57 @@
                 </plugin>
 
                 <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>findbugs-maven-plugin</artifactId>
+                    <version>${findbugs-maven-plugin.version}</version>
+                    <configuration>
+                        <failOnError>true</failOnError>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>${maven-pmd-plugin.version}</version>
+                    <configuration>
+                        <failOnViolation>true</failOnViolation>
+                        <printFailingErrors>true</printFailingErrors>
+                        <verbose>true</verbose>
+                        <!--Disable Maven warning: [WARNING] Unable to locate Source XRef to link to - DISABLED-->
+                        <linkXRef>false</linkXRef>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${maven-checkstyle-plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.hp.ossa</groupId>
+                            <artifactId>build-resources</artifactId>
+                            <version>${build-resources.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${checkstyle.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <failOnViolation>true</failOnViolation>
+                        <violationSeverity>error</violationSeverity>
+                        <configLocation>java-checkstyle.xml</configLocation>
+                    </configuration>
+                </plugin>
+
+                <plugin>
                     <groupId>net.alchim31.maven</groupId>
                     <artifactId>scala-maven-plugin</artifactId>
                     <version>${scala-maven-plugin.version}</version>
                     <configuration>
                         <args>
+                            <!--TODO Update for Scala 2.12-->
                             <!--https://tpolecat.github.io/2017/04/25/scalac-flags.html-->
                             <arg>-deprecation</arg>
                             <arg>-feature</arg>
@@ -489,6 +288,12 @@
                 </plugin>
 
                 <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${build-helper-maven-plugin.version}</version>
+                </plugin>
+
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>${maven-clean-plugin.version}</version>
@@ -509,8 +314,26 @@
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-source-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
                     <version>${maven-install-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${maven-site-plugin.version}</version>
                 </plugin>
 
                 <plugin>
@@ -530,7 +353,7 @@
                         <dependency>
                             <groupId>org.scalatest</groupId>
                             <artifactId>scalatest_${compiler.scala.compat.version}</artifactId>
-                            <version>${scalatest.version}</version>
+                            <version>${ossa.version.scalatest}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -539,6 +362,8 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
                     <configuration>
+                        <!--If left default, Jenkins marks a build with failed tests as 'unstable' instead of 'failed'-->
+                        <testFailureIgnore>false</testFailureIgnore>
                         <forkCount>1</forkCount>
                         <reuseForks>false</reuseForks>
                         <systemPropertyVariables>
@@ -593,6 +418,69 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>${maven-dependency-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${maven-assembly-plugin.version}</version>
+                    <configuration>
+                        <appendAssemblyId>false</appendAssemblyId>
+                        <attach>true</attach>
+                        <delimiters>
+                            <delimiter>${resources.filter.delimiter}</delimiter>
+                        </delimiters>
+                        <archiverConfig>
+                            <!--
+                            directoryMode does not work for implicitly created directories
+                            See https://issues.apache.org/jira/browse/MASSEMBLY-494
+                            -->
+                            <defaultDirectoryMode>${mode.dir}</defaultDirectoryMode>
+                        </archiverConfig>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>${maven-antrun-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>rpm-maven-plugin</artifactId>
+                    <version>${rpm-maven-plugin.version}</version>
+                    <extensions>true</extensions>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.googlecode.maven-download-plugin</groupId>
+                    <artifactId>download-maven-plugin</artifactId>
+                    <version>${download-maven-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>${versions-maven-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.gmaven</groupId>
+                    <artifactId>groovy-maven-plugin</artifactId>
+                    <version>${groovy-maven-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-ejb-plugin</artifactId>
+                    <version>${maven-ejb-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-ear-plugin</artifactId>
+                    <version>${maven-ear-plugin.version}</version>
                 </plugin>
 
             </plugins>
