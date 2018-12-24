@@ -15,12 +15,12 @@
         <url>https://github.com/tashoyan</url>
     </organization>
 
-    <!--modules>
+    <modules>
         <module>build-resources</module>
-        <module>lib</module>
-        <module>main</module>
-        <module>distribution</module>
-    </modules-->
+        <!--<module>lib</module>-->
+        <!--<module>main</module>-->
+        <!--<module>distribution</module>-->
+    </modules>
 
     <properties>
         <!--TODO Remove unused properties-->
@@ -184,7 +184,7 @@
                     <version>${formatter-maven-plugin.version}</version>
                     <dependencies>
                         <dependency>
-                            <groupId>com.hp.ossa</groupId>
+                            <groupId>${project.groupId}</groupId>
                             <artifactId>build-resources</artifactId>
                             <version>${build-resources.version}</version>
                         </dependency>
@@ -204,7 +204,7 @@
                     <version>${scalastyle-maven-plugin.version}</version>
                     <dependencies>
                         <dependency>
-                            <groupId>com.hp.ossa</groupId>
+                            <groupId>${project.groupId}</groupId>
                             <artifactId>build-resources</artifactId>
                             <version>${build-resources.version}</version>
                         </dependency>
@@ -250,7 +250,7 @@
                     <version>${maven-checkstyle-plugin.version}</version>
                     <dependencies>
                         <dependency>
-                            <groupId>com.hp.ossa</groupId>
+                            <groupId>${project.groupId}</groupId>
                             <artifactId>build-resources</artifactId>
                             <version>${build-resources.version}</version>
                         </dependency>
@@ -371,6 +371,7 @@
                 </plugin>
 
                 <plugin>
+                    <!--TODO Logging configuration from build-resources-->
                     <groupId>org.scalatest</groupId>
                     <artifactId>scalatest-maven-plugin</artifactId>
                     <version>${scalatest-maven-plugin.version}</version>
@@ -387,16 +388,17 @@
                         <dependency>
                             <groupId>org.scalatest</groupId>
                             <artifactId>scalatest_${compiler.scala.compat.version}</artifactId>
-                            <version>${ossa.version.scalatest}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
 
                 <plugin>
+                    <!--TODO Logging configuration from build-resources-->
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
                     <configuration>
-                        <!--If left default, Jenkins marks a build with failed tests as 'unstable' instead of 'failed'-->
+                        <!--If left default, Jenkins marks a build with failed tests as 'unstable' instead of 'failed'.
+                        But we want to fail fast.-->
                         <testFailureIgnore>false</testFailureIgnore>
                         <forkCount>1</forkCount>
                         <reuseForks>false</reuseForks>
@@ -530,7 +532,7 @@
                                 <regexPropertySetting>
                                     <!--
                                     The product rpm package file.
-                                    Example: hpe-inta-pdo-1.1.0SNAPSHOT-1369.noarch.rpm
+                                    Example: product-name-1.1.0SNAPSHOT-1369.noarch.rpm
                                     -->
                                     <name>distribution.package.rpm.file</name>
                                     <value>${distribution.package.name}-${project.version}-${distribution.package.rpm.release}.noarch.rpm</value>
