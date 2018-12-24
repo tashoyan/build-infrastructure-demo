@@ -10,33 +10,66 @@
     <name>Build infrastructure demo</name>
     <description>Demonstrates code quality enforcement with Maven</description>
 
+    <organization>
+        <name>Code Decency League</name>
+        <url>https://github.com/tashoyan</url>
+    </organization>
+
     <!--modules>
         <module>build-resources</module>
         <module>lib</module>
         <module>main</module>
+        <module>distribution</module>
     </modules-->
 
     <properties>
+        <!--TODO Remove unused properties-->
+
+        <!--TODO packaging properties-->
+        <distribution.product.name>PRODUCT_NAME</distribution.product.name>
+        <distribution.product.title>Product Title</distribution.product.title>
+        <distribution.package.name>PACKAGE_${distribution.product.name}</distribution.package.name>
+        <distribution.package.rpm.group>RPM_GROUP</distribution.package.rpm.group>
+        <distribution.package.build.number>MUST_COME_FROM_CI</distribution.package.build.number>
+        <distribution.package.rpm.release>${distribution.package.build.number}</distribution.package.rpm.release>
+        <distribution.package.zip.name>${distribution.package.name}-${distribution.version}-${distribution.package.build.number}</distribution.package.zip.name>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <resources.filter.delimiter>@{*}</resources.filter.delimiter>
+        <mode.file.exec>0755</mode.file.exec>
+        <mode.file.data>0644</mode.file.data>
+        <mode.dir>0755</mode.dir>
+
         <compiler.java.version>1.8</compiler.java.version>
         <compiler.scala.version>2.12.8</compiler.scala.version>
         <compiler.scala.compat.version>2.12</compiler.scala.compat.version>
 
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
-        <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
+        <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
+        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
         <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
+        <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
+        <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
+        <scalatest-maven-plugin.version>2.0.0</scalatest-maven-plugin.version>
+        <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
         <scala-maven-plugin.version>3.3.2</scala-maven-plugin.version>
         <maven-jar-plugin.version>3.1.0</maven-jar-plugin.version>
         <maven-shade-plugin.version>3.1.1</maven-shade-plugin.version>
         <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
-        <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
+        <maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
+        <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
+        <rpm-maven-plugin.version>2.2.0</rpm-maven-plugin.version>
+        <download-maven-plugin.version>1.4.0</download-maven-plugin.version>
+        <versions-maven-plugin.version>2.5</versions-maven-plugin.version>
         <scalariform-maven-plugin.version>0.2.2</scalariform-maven-plugin.version>
         <scalastyle-maven-plugin.version>1.0.0</scalastyle-maven-plugin.version>
-        <scalatest-maven-plugin.version>2.0.0</scalatest-maven-plugin.version>
+        <formatter-maven-plugin.version>2.7.3</formatter-maven-plugin.version>
+        <findbugs-maven-plugin.version>3.0.5</findbugs-maven-plugin.version>
+        <maven-pmd-plugin.version>3.10.0</maven-pmd-plugin.version>
+        <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
 
         <scala-parser-combinators.version>1.0.4</scala-parser-combinators.version>
         <scalatest.version>3.0.4</scalatest.version>
@@ -52,6 +85,7 @@
     </properties>
 
     <!--TODO some dependency with commons-logging as a transitive dependency to illustrate exclusion-->
+    <!--TODO Comments to all important settings to clarify why we do this-->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -465,28 +499,50 @@
                     <version>${versions-maven-plugin.version}</version>
                 </plugin>
 
-                <plugin>
-                    <groupId>org.codehaus.gmaven</groupId>
-                    <artifactId>groovy-maven-plugin</artifactId>
-                    <version>${groovy-maven-plugin.version}</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-ejb-plugin</artifactId>
-                    <version>${maven-ejb-plugin.version}</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-ear-plugin</artifactId>
-                    <version>${maven-ear-plugin.version}</version>
-                </plugin>
-
             </plugins>
         </pluginManagement>
 
         <plugins>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>Set distribution-related properties</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>regex-properties</goal>
+                        </goals>
+                        <configuration>
+                            <regexPropertySettings>
+                                <regexPropertySetting>
+                                    <!--
+                                    The product version as it should be according to the versioning policy.
+                                    Examples: 1.1.0SNAPSHOT, 1.1.0
+                                    -->
+                                    <name>distribution.version</name>
+                                    <value>${project.version}</value>
+                                    <regex>-SNAPSHOT</regex>
+                                    <replacement>SNAPSHOT</replacement>
+                                    <failIfNoMatch>false</failIfNoMatch>
+                                </regexPropertySetting>
+                                <regexPropertySetting>
+                                    <!--
+                                    The product rpm package file.
+                                    Example: hpe-inta-pdo-1.1.0SNAPSHOT-1369.noarch.rpm
+                                    -->
+                                    <name>distribution.package.rpm.file</name>
+                                    <value>${distribution.package.name}-${project.version}-${distribution.package.rpm.release}.noarch.rpm</value>
+                                    <regex>-SNAPSHOT</regex>
+                                    <replacement>SNAPSHOT</replacement>
+                                    <failIfNoMatch>false</failIfNoMatch>
+                                </regexPropertySetting>
+                            </regexPropertySettings>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <artifactId>maven-enforcer-plugin</artifactId>
@@ -706,6 +762,83 @@
                                 <phase>none</phase>
                                 <goals>
                                     <goal>test</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                </plugins>
+            </build>
+
+        </profile>
+
+        <profile>
+
+            <id>pure-java</id>
+            <activation>
+                <file>
+                    <exists>src/main/java</exists>
+                    <missing>src/main/scala</missing>
+                </file>
+            </activation>
+
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>net.revelc.code.formatter</groupId>
+                        <artifactId>formatter-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>format-java</id>
+                                <phase>process-sources</phase>
+                                <goals>
+                                    <goal>format</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>findbugs-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>findbugs</id>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-pmd-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>pmd-check</id>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>pmd-cmd-check</id>
+                                <goals>
+                                    <goal>cpd-check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>checkstyle</id>
+                                <goals>
+                                    <goal>check</goal>
                                 </goals>
                             </execution>
                         </executions>
