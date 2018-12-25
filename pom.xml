@@ -19,7 +19,7 @@
         <module>build-resources</module>
         <module>scala-lib</module>
         <module>java-main</module>
-        <!--<module>distribution</module>-->
+        <module>distribution</module>
     </modules>
 
     <!--TODO Format XML resources-->
@@ -43,6 +43,10 @@
         <distribution.package.rpm.release>${distribution.package.build.number}</distribution.package.rpm.release>
         <!--TODO Can we use distribution.package.zip.file instead and include '.zip' - same ways as for the rpm file?-->
         <distribution.package.zip.name>${distribution.package.name}-${distribution.version}-${distribution.package.build.number}</distribution.package.zip.name>
+        <distribution.default.base.install.dir>/opt</distribution.default.base.install.dir>
+        <distribution.default.base.data.dir>/var/opt</distribution.default.base.data.dir>
+        <distribution.default.install.dir>${distribution.default.base.install.dir}/${distribution.product.short.name}</distribution.default.install.dir>
+        <distribution.default.data.dir>${distribution.default.base.data.dir}/${distribution.product.short.name}</distribution.default.data.dir>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <resources.filter.delimiter>@{*}</resources.filter.delimiter>
