@@ -10,6 +10,7 @@ default_install_dir="@{distribution.default.install.dir}"
 default_data_dir="@{distribution.default.data.dir}"
 dir_permission_mode="@{mode.dir}"
 rpm_file="@{distribution.package.rpm.file}"
+package_name="@{distribution.package.name}"
 
 function show_help() {
   echo "Usage:"
@@ -132,3 +133,27 @@ fi
 rpm_options="--prefix \"$install_dir\" $rpm_options"
 base_dir="$(dirname "$0")"
 cmd_out="$(eval rpm -ihv $rpm_options \"$base_dir/$rpm_file\" 2>&1)" || error_and_exit "Failed to install rpm package with arguments $rpm_options: $base_dir/$rpm_file. Reason: $cmd_out"
+
+# Manually change mode on the root directory, don't rely on rpm
+chmod "$dir_permission_mode" "$install_dir"
+
+# Creating data directory
+cmd_out="$(eval mkdir -p \"$data_dir\" 2>&1)" || error_and_exit "Failed to create data directory $data_dir. Reason: $cmd_out"
+
+# Creating conf directory
+cmd_out="$(eval mkdir -p \"$data_dir/conf\" 2>&1)" || error_and_exit "Failed to create conf directory. Reason: $cmd_out"
+
+# Copy configuration data
+cmd_out="$(eval cp -r -p \"$install_dir\"/default-conf/* \"$data_dir/conf\" 2>&1)" || error_and_exit "Failed to copy configuration data. Reason: $cmd_out"
+
+# Creating log directory
+cmd_out="$(eval mkdir -p \"$data_dir/log\" 2>&1)" || error_and_exit "Failed to create log directory. Reason: $cmd_out"
+
+# Saving installation settings to the environment lib
+lib_env_full="$install_dir/lib/lib_env.sh"
+cmd_out="$(eval touch \"$lib_env_full\" 2>&1)" || error_and_exit "Failed to create environment lib: $lib_env_full. Reason: $cmd_out"
+echo "export data_dir=\"$data_dir\"" >> "$lib_env_full"
+echo "export rpm_db_dir=\"$rpm_db_dir\"" >> "$lib_env_full"
+echo "export package_name=\"$package_name\"" >> "$lib_env_full"
+
+echo "$product_full_name was successfully installed"
