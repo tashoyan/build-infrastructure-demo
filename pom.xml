@@ -22,6 +22,10 @@
         <!--<module>distribution</module>-->
     </modules>
 
+    <!--TODO Format XML resources-->
+    <!--TODO Format shell resources-->
+    <!--TODO Format pom files-->
+
     <properties>
         <!--TODO Remove unused properties-->
 
