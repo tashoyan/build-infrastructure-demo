@@ -11,7 +11,7 @@
     <description>Demonstrates code quality enforcement with Maven</description>
 
     <organization>
-        <name>${distribution.vendor.name}</name>
+        <name>${distribution.vendor.full.name}</name>
         <url>https://github.com/tashoyan</url>
     </organization>
 
@@ -32,6 +32,7 @@
         <distribution.product.short.name>build-infra-demo</distribution.product.short.name>
         <distribution.package.name>${distribution.vendor.short.name}-${distribution.product.short.name}</distribution.package.name>
         <distribution.package.rpm.group>${distribution.vendor.short.name}</distribution.package.rpm.group>
+        <!-- When building on Jenkins: -Ddistribution.package.build.number=${BUILD_NUMBER} -->
         <distribution.package.build.number>MUST_COME_FROM_CI</distribution.package.build.number>
         <!--release is the number of times this version of the software has been packaged.
         http://ftp.rpm.org/max-rpm/ch-rpm-file-format.html -->
