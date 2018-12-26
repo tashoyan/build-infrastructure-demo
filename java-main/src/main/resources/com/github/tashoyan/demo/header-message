@@ -1,1 +1,2 @@
-@{distribution.vendor.full.name} @{distribution.product.full.name} version @{distribution.version}
+@{distribution.vendor.full.name}
+@{distribution.product.full.name} version @{distribution.version}
