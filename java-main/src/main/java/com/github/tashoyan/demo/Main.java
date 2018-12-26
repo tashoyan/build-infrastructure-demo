@@ -1,12 +1,10 @@
 package com.github.tashoyan.demo;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 
 import static com.github.tashoyan.demo.Lib.reverseString;
 
@@ -39,17 +37,21 @@ public final class Main {
     }
 
     private static String getMessageFromResource(String resourceName) {
-        URL url = Main.class.getResource(resourceName);
-        if (url == null) {
+        InputStream resourceStream = Main.class.getResourceAsStream(resourceName);
+        if (resourceStream == null) {
             throw new InternalError("Resource not found: " + resourceName + "; corrupted installation");
         }
-
         try {
-            Path path = Paths.get(url.toURI());
-            List<String> lines = Files.readAllLines(path);
-            return String.join("\n", lines);
-        } catch (URISyntaxException | IOException e) {
+            return IOUtils.toString(resourceStream, Charset.defaultCharset());
+        } catch (IOException e) {
             throw new RuntimeException("Failed to parse resource " + resourceName, e);
+        } finally {
+            try {
+                resourceStream.close();
+            } catch (IOException e) {
+                // TODO Log error
+                System.err.println(e.getMessage());
+            }
         }
     }
 
