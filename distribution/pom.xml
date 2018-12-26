@@ -262,7 +262,7 @@
                         </mapping>
 
                         <mapping>
-                            <directory>${distribution.default.install.dir}/lib</directory>
+                            <directory>${distribution.default.install.dir}/libexec</directory>
                             <sources>
                                 <source>
                                     <location>${rpm.build.dir}/libexec</location>
