@@ -32,7 +32,7 @@ public final class Main {
      */
     public static void main(String[] args) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Running with args: %s", String.join(",", args));
+            LOGGER.debug("Running with args: {}", String.join(",", args));
         }
 
         JulSlf4jBridge.redirectJul();
@@ -60,8 +60,7 @@ public final class Main {
             try {
                 resourceStream.close();
             } catch (IOException e) {
-                // TODO Log error
-                System.err.println(e.getMessage());
+                LOGGER.error("Error closing resource stream", e);
             }
         }
     }

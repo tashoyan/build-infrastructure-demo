@@ -21,7 +21,7 @@ object Lib {
     Validate.notNull(str, "Argument must not be null")
 
     if (logger.isDebugEnabled) {
-      logger.debug("reverse for %s", str)
+      logger.debug("reverse for '{}'", str)
     }
 
     str.reverse
