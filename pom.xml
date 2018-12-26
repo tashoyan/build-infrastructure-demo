@@ -88,11 +88,12 @@
         <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
 
         <groovy.version>2.5.5</groovy.version>
+        <commons-lang3.version>3.7</commons-lang3.version>
         <scala-parser-combinators.version>1.0.4</scala-parser-combinators.version>
         <scalatest.version>3.0.4</scalatest.version>
         <scalactic.version>3.0.4</scalactic.version>
-        <commons-collections.version>3.2.2</commons-collections.version>
-        <commons-lang.version>2.6</commons-lang.version>
+        <!--<commons-collections.version>3.2.2</commons-collections.version>-->
+        <!--<commons-lang.version>2.6</commons-lang.version>-->
         <log4j.version>1.2.17</log4j.version>
         <slf4j.version>1.7.16</slf4j.version>
 
@@ -109,6 +110,11 @@
                 <groupId>org.scala-lang</groupId>
                 <artifactId>scala-library</artifactId>
                 <version>${compiler.scala.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
