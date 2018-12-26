@@ -13,6 +13,13 @@
     <name>Distribution</name>
     <description>Distribution Package</description>
 
+    <properties>
+        <groovy.version>2.5.5</groovy.version>
+        <rpm.build.dir>${project.build.directory}/rpm-build-dir</rpm.build.dir>
+        <zip.build.dir>${project.build.directory}/zip-build-dir</zip.build.dir>
+        <rpm.opensource.dir>${rpm.build.dir}/opensource</rpm.opensource.dir>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -20,5 +27,45 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
+
+    <build>
+
+        <plugins>
+
+            <plugin>
+                <!--Example of including both binary and source distributions of an open source product-->
+                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <artifactId>download-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>Download Apache Groovy language distribution</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>https://dl.bintray.com/groovy/maven/apache-groovy-binary-${groovy.version}.zip</url>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <md5>0effe9abcc206480212e7e2bf0239a29</md5>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Download Apache Groovy language source code</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>http://apache.mirror.anlx.net/groovy/${groovy.version}/sources/apache-groovy-src-${groovy.version}.zip</url>
+                            <outputDirectory>${rpm.opensource.dir}</outputDirectory>
+                            <md5>53cc5eb6c32b19ee8828b3a2ca9bb461</md5>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
+    </build>
 
 </project>
