@@ -15,8 +15,7 @@ function show_help() {
   echo "  $(basename $0) [OPTION]"
   echo ""
   echo "Description:"
-  echo "  $(basename $0) is a command for uninstalling $product_full_name."
-  echo "  All running applications of $product_full_name should be stopped before executing this command, otherwise the command will exit immediately with error."
+  echo "  $(basename $0) is a command to run $product_full_name."
   echo ""
   echo "Options:"
   echo "  -h"
@@ -25,6 +24,8 @@ function show_help() {
   echo "Exit status:"
   echo "  Exits with status 0 if a command executed successfully, greater than 0 if errors occur."
 }
+
+main_class="com.github.tashoyan.demo.Main"
 
 # Set default mode mask for all files and directories created by this script
 permission_mask="$(expr 777 - $permission_mode)"
@@ -71,24 +72,21 @@ then
   esac
 fi
 
-if ps -ef | grep -i -- "-D$product_short_name" | grep -v "$(basename $0)" | grep -v grep
-then
-  error_and_exit "Cannot uninstall as some applications of $product_full_name are currently running"
-fi
+product_classpath=$(find "$install_dir/lib" -maxdepth 1 -type f -name "*.jar" -printf "%p:")
+ext_classpath=$(find "$install_dir/lib/ext" -type f -name "*.jar" -printf "%p:")
+classpath="$product_classpath$ext_classpath"
 
-log_info "The data directory will not be deleted during unistallation:  $data_dir"
+app_properties="\
+\"-D$product_short_name\" \
+\"-Dinstall.dir=$install_dir\" \
+\"-Ddata.dir=$data_dir\" \
+\"-Dlog4j.configuration=file:$data_dir/conf/log4j.xml\" \
+"
 
-#Erase rpm package
-if test ! -z "$rpm_db_dir"
-then
-	options="--dbpath \"$rpm_db_dir\""
-else
-	options=""
-fi
-
-stderr="$(eval rpm -e $options \"$package_name\" 2>&1)" || error_and_exit "Unable to erase $product_full_name package. Reason: $stderr"
-
-# Remove installation directory
-stderr="$(eval rm -r \"$install_dir\" 2>&1 </dev/null)" || error_and_exit "Unable to remove installation directory. Reason: $stderr"
-
-log_info "$product_full_name was successfully uninstalled"
+eval nohup $JAVA \
+  "$java_properties" \
+  "$app_properties" \
+  -cp "$classpath" \
+  "$main_class" \
+  "${@:-}" \
+  "2>&1" "</dev/null" "|" "tee" "-a" "\"$(get_log_file)\""

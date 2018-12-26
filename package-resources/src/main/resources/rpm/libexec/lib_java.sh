@@ -2,7 +2,7 @@
 
 # Requires lib_log.sh to be already loaded
 
-required_java_version="1.8"
+required_java_version="@{compiler.java.version}"
 
 if test "${JAVA_HOME:-x}" != "x"
 then
