@@ -17,7 +17,7 @@
 
     <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
         <param name="threshold" value="TRACE"/>
-        <param name="File" value="${data.dir}/log/@{distribution.product.name}.log"/>
+        <param name="File" value="${data.dir}/log/@{distribution.product.short.name}.log"/>
         <param name="MaxFileSize" value="50MB"/>
         <param name="MaxBackupIndex" value="10"/>
         <layout class="org.apache.log4j.PatternLayout">
