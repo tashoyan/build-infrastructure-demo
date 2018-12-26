@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.github.tashoyan</groupId>
+        <groupId>com.github.tashoyan.build-infra-demo</groupId>
         <artifactId>build-infrastructure-demo</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
@@ -14,6 +14,7 @@
     <description>Distribution Package</description>
 
     <properties>
+        <package.resources.build.dir>${project.build.directory}/package-resources</package.resources.build.dir>
         <groovy.version>2.5.5</groovy.version>
         <groovy.bin.package.file>apache-groovy-binary-${groovy.version}.zip</groovy.bin.package.file>
         <rpm.build.dir>${project.build.directory}/rpm-build-dir</rpm.build.dir>
@@ -37,6 +38,58 @@
     <build>
 
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>Copy the product libraries</id>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${rpm.build.dir}/lib</outputDirectory>
+                            <includeGroupIds>${project.groupId}</includeGroupIds>
+                            <excludeArtifactIds>package-resources</excludeArtifactIds>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Copy third party libraries</id>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${rpm.build.dir}/lib/ext</outputDirectory>
+                            <excludeGroupIds>${project.groupId}</excludeGroupIds>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Copy source code of open source dependencies</id>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${rpm.opensource.dir}</outputDirectory>
+                            <classifier>sources</classifier>
+                            <includeScope>runtime</includeScope>
+                            <excludeGroupIds>${project.groupId}</excludeGroupIds>
+                            <failOnMissingClassifierArtifact>true</failOnMissingClassifierArtifact>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>unpack</id>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeGroupIds>${project.groupId}</includeGroupIds>
+                            <includeArtifactIds>package-resources</includeArtifactIds>
+                            <outputDirectory>${package.resources.build.dir}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <!--Example of including both binary and source distributions of an open source product-->
@@ -86,6 +139,34 @@
                                 <exec dir="${rpm.build.dir}" executable="unzip">
                                     <arg value="${project.build.directory}/${groovy.bin.package.file}"/>
                                 </exec>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Put rpm package resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <copy todir="${rpm.build.dir}">
+                                    <fileset dir="${package.resources.build.dir}/rpm"/>
+                                </copy>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Put zip package resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <copy todir="${zip.build.dir}">
+                                    <fileset dir="${package.resources.build.dir}/zip"/>
+                                </copy>
                             </target>
                         </configuration>
                     </execution>
