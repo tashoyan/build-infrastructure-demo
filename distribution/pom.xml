@@ -37,6 +37,32 @@
 
     <build>
 
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>Check dependencies</id>
+                            <goals>
+                                <goal>analyze-only</goal>
+                            </goals>
+                            <configuration>
+                                <ignoredUnusedDeclaredDependencies>
+                                    <!--Include these libraries to the package along with their transitive dependencies-->
+                                    <ignoredUnusedDeclaredDependency>${project.groupId}:java-main</ignoredUnusedDeclaredDependency>
+                                    <!--Include package resources to the package.
+                                     Don't include the artifact itself to the package, only the resources from it.-->
+                                    <ignoredUnusedDeclaredDependency>${project.groupId}:package-resources</ignoredUnusedDeclaredDependency>
+                                </ignoredUnusedDeclaredDependencies>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
 
             <plugin>
@@ -78,7 +104,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>unpack</id>
+                        <id>Unpack package resources</id>
                         <goals>
                             <goal>unpack-dependencies</goal>
                         </goals>
@@ -169,6 +195,150 @@
                                 </copy>
                             </target>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>rpm-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>Generate rpm package</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>rpm</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <group>${distribution.package.rpm.group}</group>
+                    <name>${distribution.package.name}</name>
+                    <projversion>${distribution.version}</projversion>
+                    <release>${distribution.package.rpm.release}</release>
+                    <defaultUsername>root</defaultUsername>
+                    <defaultGroupname>root</defaultGroupname>
+                    <needarch>noarch</needarch>
+                    <autoRequires>false</autoRequires>
+                    <autoProvides>false</autoProvides>
+                    <prefix>${distribution.default.install.dir}</prefix>
+                    <summary>${distribution.product.full.name}</summary>
+                    <description>${distribution.product.full.name}</description>
+
+                    <mappings>
+
+                        <mapping>
+                            <directory>${distribution.default.install.dir}/bin</directory>
+                            <sources>
+                                <source>
+                                    <location>${rpm.build.dir}/bin</location>
+                                </source>
+                            </sources>
+                            <filemode>${mode.file.exec}</filemode>
+                            <directoryIncluded>false</directoryIncluded>
+                        </mapping>
+
+                        <mapping>
+                            <directory>${distribution.default.install.dir}/default-conf</directory>
+                            <configuration>true</configuration>
+                            <sources>
+                                <source>
+                                    <location>${rpm.build.dir}/default-conf</location>
+                                </source>
+                            </sources>
+                            <filemode>${mode.file.data}</filemode>
+                            <directoryIncluded>false</directoryIncluded>
+                        </mapping>
+
+                        <mapping>
+                            <directory>${distribution.default.install.dir}/lib</directory>
+                            <sources>
+                                <source>
+                                    <location>${rpm.build.dir}/lib</location>
+                                </source>
+                            </sources>
+                            <filemode>${mode.file.data}</filemode>
+                            <directoryIncluded>false</directoryIncluded>
+                        </mapping>
+
+                        <mapping>
+                            <directory>${distribution.default.install.dir}/lib</directory>
+                            <sources>
+                                <source>
+                                    <location>${rpm.build.dir}/libexec</location>
+                                </source>
+                            </sources>
+                            <filemode>${mode.file.data}</filemode>
+                            <directoryIncluded>false</directoryIncluded>
+                        </mapping>
+
+                        <mapping>
+                            <directory>${distribution.default.install.dir}/opensource</directory>
+                            <sources>
+                                <source>
+                                    <location>${rpm.opensource.dir}</location>
+                                </source>
+                            </sources>
+                            <filemode>${mode.file.data}</filemode>
+                            <directoryIncluded>false</directoryIncluded>
+                        </mapping>
+
+                        <mapping>
+                            <directory>${distribution.default.install.dir}/groovy-${groovy.version}</directory>
+                            <sources>
+                                <source>
+                                    <location>${rpm.build.dir}/groovy-${groovy.version}</location>
+                                </source>
+                            </sources>
+                            <directoryIncluded>false</directoryIncluded>
+                        </mapping>
+
+                    </mappings>
+
+                    <defineStatements>
+                        <!--Prevent rpmbuild from compiling Python files if there are any-->
+                        <!--Prevent rpmbuild from repacking jars-->
+                        <defineStatement>
+                            __os_install_post %(echo '%{__os_install_post}' | \
+                            sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g' | \
+                            sed -e 's!.*/usr/lib[^[:space:]]*/brp-java-repack-jars.*$!!g')
+                        </defineStatement>
+                    </defineStatements>
+
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>Generate zip distribution</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${distribution.package.zip.name}</finalName>
+                            <descriptors>
+                                <descriptor>${project.basedir}/src/main/assembly/distribution-zip.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <!--Disable default execution, because no jar in this module-->
+                        <id>default-jar</id>
+                        <phase>none</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
