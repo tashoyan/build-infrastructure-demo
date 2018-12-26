@@ -8,18 +8,10 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>java-main</artifactId>
+    <artifactId>package-resources</artifactId>
     <packaging>jar</packaging>
-    <name>Java Main</name>
-    <description>Dummy program written purely in Java</description>
-
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>scala-lib</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
+    <name>Package Resources</name>
+    <description>Resources to put into the distribution package</description>
 
     <build>
 

@@ -150,7 +150,7 @@ cmd_out="$(eval cp -r -p \"$install_dir\"/default-conf/* \"$data_dir/conf\" 2>&1
 cmd_out="$(eval mkdir -p \"$data_dir/log\" 2>&1)" || error_and_exit "Failed to create log directory. Reason: $cmd_out"
 
 # Saving installation settings to the environment lib
-lib_env_full="$install_dir/lib/lib_env.sh"
+lib_env_full="$install_dir/libexec/lib_env.sh"
 cmd_out="$(eval touch \"$lib_env_full\" 2>&1)" || error_and_exit "Failed to create environment lib: $lib_env_full. Reason: $cmd_out"
 echo "export data_dir=\"$data_dir\"" >> "$lib_env_full"
 echo "export rpm_db_dir=\"$rpm_db_dir\"" >> "$lib_env_full"

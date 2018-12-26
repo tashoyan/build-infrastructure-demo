@@ -15,6 +15,7 @@
 
     <properties>
         <groovy.version>2.5.5</groovy.version>
+        <groovy.bin.package.file>apache-groovy-binary-${groovy.version}.zip</groovy.bin.package.file>
         <rpm.build.dir>${project.build.directory}/rpm-build-dir</rpm.build.dir>
         <zip.build.dir>${project.build.directory}/zip-build-dir</zip.build.dir>
         <rpm.opensource.dir>${rpm.build.dir}/opensource</rpm.opensource.dir>
@@ -24,6 +25,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>java-main</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>package-resources</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
@@ -44,7 +50,7 @@
                             <goal>wget</goal>
                         </goals>
                         <configuration>
-                            <url>https://dl.bintray.com/groovy/maven/apache-groovy-binary-${groovy.version}.zip</url>
+                            <url>https://dl.bintray.com/groovy/maven/${groovy.bin.package.file}</url>
                             <outputDirectory>${project.build.directory}</outputDirectory>
                             <md5>0effe9abcc206480212e7e2bf0239a29</md5>
                         </configuration>
@@ -59,6 +65,28 @@
                             <url>http://apache.mirror.anlx.net/groovy/${groovy.version}/sources/apache-groovy-src-${groovy.version}.zip</url>
                             <outputDirectory>${rpm.opensource.dir}</outputDirectory>
                             <md5>53cc5eb6c32b19ee8828b3a2ca9bb461</md5>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>Unpack Apache Groovy language distribution</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <!--Cannot use unzip Ant task - it does not preserve file permissions-->
+                                <exec dir="${rpm.build.dir}" executable="unzip">
+                                    <arg value="${project.build.directory}/${groovy.bin.package.file}"/>
+                                </exec>
+                            </target>
                         </configuration>
                     </execution>
                 </executions>

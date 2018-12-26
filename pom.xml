@@ -19,6 +19,7 @@
         <module>build-resources</module>
         <module>scala-lib</module>
         <module>java-main</module>
+        <module>package-resources</module>
         <module>distribution</module>
     </modules>
 
