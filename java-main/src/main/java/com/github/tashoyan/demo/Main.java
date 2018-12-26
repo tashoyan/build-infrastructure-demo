@@ -1,6 +1,9 @@
 package com.github.tashoyan.demo;
 
+import com.github.tashoyan.log.JulSlf4jBridge;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +18,8 @@ public final class Main {
 
     private static final String HEADER_RESOURCE = "header-message";
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
+
     private Main() {
         // No instances
     }
@@ -26,6 +31,12 @@ public final class Main {
      *            Arguments are ignored.
      */
     public static void main(String[] args) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Running with args: %s", String.join(",", args));
+        }
+
+        JulSlf4jBridge.redirectJul();
+
         System.out.println(getHeaderMessage());
 
         String str = "dummy";

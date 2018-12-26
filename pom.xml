@@ -90,7 +90,7 @@
         <groovy.version>2.5.5</groovy.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <commons-io.version>2.6</commons-io.version>
-        <scala-parser-combinators.version>1.0.4</scala-parser-combinators.version>
+        <!--<scala-parser-combinators.version>1.0.4</scala-parser-combinators.version>-->
         <scalatest.version>3.0.4</scalatest.version>
         <scalactic.version>3.0.4</scalactic.version>
         <!--<commons-collections.version>3.2.2</commons-collections.version>-->
