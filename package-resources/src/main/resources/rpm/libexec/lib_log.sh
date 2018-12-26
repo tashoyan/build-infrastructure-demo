@@ -38,7 +38,7 @@ function log_info {
 
 function log_error {
   local msg="ERROR: ${*:-}"
-  echo "$msg"
+  echo "$msg" >&2
   log "$msg"
 }
 

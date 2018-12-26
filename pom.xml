@@ -48,6 +48,7 @@
         <distribution.default.base.data.dir>/var/opt</distribution.default.base.data.dir>
         <distribution.default.install.dir>${distribution.default.base.install.dir}/${distribution.product.short.name}</distribution.default.install.dir>
         <distribution.default.data.dir>${distribution.default.base.data.dir}/${distribution.product.short.name}</distribution.default.data.dir>
+        <distribution.groovy.install.dir>groovy-${groovy.version}</distribution.groovy.install.dir>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <resources.filter.delimiter>@{*}</resources.filter.delimiter>
@@ -86,6 +87,7 @@
         <maven-pmd-plugin.version>3.10.0</maven-pmd-plugin.version>
         <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
 
+        <groovy.version>2.5.5</groovy.version>
         <scala-parser-combinators.version>1.0.4</scala-parser-combinators.version>
         <scalatest.version>3.0.4</scalatest.version>
         <scalactic.version>3.0.4</scalactic.version>

@@ -15,7 +15,6 @@
 
     <properties>
         <package.resources.build.dir>${project.build.directory}/package-resources</package.resources.build.dir>
-        <groovy.version>2.5.5</groovy.version>
         <groovy.bin.package.file>apache-groovy-binary-${groovy.version}.zip</groovy.bin.package.file>
         <rpm.build.dir>${project.build.directory}/rpm-build-dir</rpm.build.dir>
         <zip.build.dir>${project.build.directory}/zip-build-dir</zip.build.dir>
@@ -284,10 +283,10 @@
                         </mapping>
 
                         <mapping>
-                            <directory>${distribution.default.install.dir}/groovy-${groovy.version}</directory>
+                            <directory>${distribution.default.install.dir}/${distribution.groovy.install.dir}</directory>
                             <sources>
                                 <source>
-                                    <location>${rpm.build.dir}/groovy-${groovy.version}</location>
+                                    <location>${rpm.build.dir}/${distribution.groovy.install.dir}</location>
                                 </source>
                             </sources>
                             <directoryIncluded>false</directoryIncluded>

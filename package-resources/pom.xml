@@ -13,6 +13,10 @@
     <name>Package Resources</name>
     <description>Resources to put into the distribution package</description>
 
+    <properties>
+        <product.config.file>${distribution.product.short.name}-env.sh</product.config.file>
+    </properties>
+
     <build>
 
         <resources>

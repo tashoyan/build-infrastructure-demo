@@ -8,7 +8,7 @@ set -o pipefail
 product_full_name="@{distribution.product.full.name}"
 default_install_dir="@{distribution.default.install.dir}"
 default_data_dir="@{distribution.default.data.dir}"
-dir_permission_mode="@{mode.dir}"
+permission_mode="@{mode.dir}"
 rpm_file="@{distribution.package.rpm.file}"
 package_name="@{distribution.package.name}"
 
@@ -53,7 +53,7 @@ function error_and_exit() {
 }
 
 # Set default mode mask for all files and directories created by this script
-permission_mask="$(expr 777 - $dir_permission_mode)"
+permission_mask="$(expr 777 - $permission_mode)"
 umask "$permission_mask"
 
 #Global variables: set to default values, update with user-defined values if needed
@@ -135,7 +135,7 @@ base_dir="$(dirname "$0")"
 cmd_out="$(eval rpm -ihv $rpm_options \"$base_dir/$rpm_file\" 2>&1)" || error_and_exit "Failed to install rpm package with arguments $rpm_options: $base_dir/$rpm_file. Reason: $cmd_out"
 
 # Manually change mode on the root directory, don't rely on rpm
-chmod "$dir_permission_mode" "$install_dir"
+chmod "$permission_mode" "$install_dir"
 
 # Creating data directory
 cmd_out="$(eval mkdir -p \"$data_dir\" 2>&1)" || error_and_exit "Failed to create data directory $data_dir. Reason: $cmd_out"
