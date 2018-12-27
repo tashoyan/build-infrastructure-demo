@@ -5,9 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 /**
- * Provides a function to redirect Java Util Logging to SLF4J.
- * See here: <a href="https://www.slf4j.org/legacy.html#jul-to-slf4j">jul-to-slf4j</a>
- * and here: <a href="https://www.slf4j.org/api/org/slf4j/bridge/SLF4JBridgeHandler.html">SLF4JBridgeHandler</a>.
+ * Provides a function to redirect Java Util Logging to SLF4J. See here:
+ * <a href="https://www.slf4j.org/legacy.html#jul-to-slf4j">jul-to-slf4j</a> and
+ * here: <a href=
+ * "https://www.slf4j.org/api/org/slf4j/bridge/SLF4JBridgeHandler.html">SLF4JBridgeHandler</a>.
  */
 public final class JulSlf4jBridge {
 
