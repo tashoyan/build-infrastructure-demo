@@ -32,11 +32,13 @@
         </dependency>
         <dependency>
             <!--Converge logging to SLF4J-->
+            <!--See here: https://www.slf4j.org/legacy.html#jcl-over-slf4j-->
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
         </dependency>
         <dependency>
             <!--Converge logging to SLF4J-->
+            <!--See here: https://www.slf4j.org/legacy.html#jul-to-slf4j-->
             <groupId>org.slf4j</groupId>
             <artifactId>jul-to-slf4j</artifactId>
         </dependency>
