@@ -1,15 +1,11 @@
-<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
 
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
     <id>distribution-zip</id>
-
     <formats>
         <format>zip</format>
     </formats>
-
     <includeBaseDirectory>false</includeBaseDirectory>
-
     <fileSets>
         <fileSet>
             <directory>${project.build.directory}/rpm/${distribution.package.name}/RPMS/noarch</directory>
@@ -30,5 +26,4 @@
             <filtered>true</filtered>
         </fileSet>
     </fileSets>
-
 </assembly>

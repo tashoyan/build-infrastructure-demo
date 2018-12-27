@@ -17,7 +17,6 @@
         <module>distribution</module>
     </modules>
 
-    <!--TODO Format XML resources-->
     <!--TODO Validate XML resources with schema-->
     <!--TODO Format shell resources-->
     <!--TODO Other static code analysis tools for Scala-->
@@ -77,6 +76,7 @@
         <download-maven-plugin.version>1.4.0</download-maven-plugin.version>
         <versions-maven-plugin.version>2.5</versions-maven-plugin.version>
         <sortpom-maven-plugin.version>2.10.0</sortpom-maven-plugin.version>
+        <xml-format-maven-plugin.version>3.0.7</xml-format-maven-plugin.version>
         <scalariform-maven-plugin.version>0.2.2</scalariform-maven-plugin.version>
         <scalastyle-maven-plugin.version>1.0.0</scalastyle-maven-plugin.version>
         <formatter-maven-plugin.version>2.7.3</formatter-maven-plugin.version>
@@ -189,6 +189,26 @@
                         <createBackupFile>false</createBackupFile>
                         <nrOfIndentSpace>4</nrOfIndentSpace>
                         <expandEmptyElements>false</expandEmptyElements>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>au.com.acegi</groupId>
+                    <artifactId>xml-format-maven-plugin</artifactId>
+                    <version>${xml-format-maven-plugin.version}</version>
+                    <configuration>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <expandEmptyElements>false</expandEmptyElements>
+                        <indentSize>4</indentSize>
+                        <lineEnding>LF</lineEnding>
+                        <newLineAfterDeclaration>true</newLineAfterDeclaration>
+                        <excludes>
+                            <!--We have a special plugin to format pom-files.-->
+                            <exclude>**/pom.xml</exclude>
+                            <!--Cannot format log4j XML configuration files:
+                            org.dom4j.DocumentException: Error on line 4 of document  : The prefix "log4j" for element "log4j:configuration" is not bound.-->
+                            <exclude>**/log4j*.xml</exclude>
+                        </excludes>
                     </configuration>
                 </plugin>
 
@@ -695,6 +715,19 @@
                             <goal>sort</goal>
                         </goals>
                         <phase>verify</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>au.com.acegi</groupId>
+                <artifactId>xml-format-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>Format XML resources</id>
+                        <goals>
+                            <goal>xml-format</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
