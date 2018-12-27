@@ -21,7 +21,6 @@
     <!--TODO Validate XML resources with schema-->
     <!--TODO Format shell resources-->
     <!--TODO Other static code analysis tools for Scala-->
-    <!--TODO Collect open source licenses along with sources-->
 
     <properties>
         <!--TODO Remove unused properties-->
