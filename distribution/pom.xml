@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.tashoyan.build-infra-demo</groupId>
@@ -123,10 +122,10 @@
                 <executions>
                     <execution>
                         <id>Download Apache Groovy language distribution</id>
-                        <phase>process-resources</phase>
                         <goals>
                             <goal>wget</goal>
                         </goals>
+                        <phase>process-resources</phase>
                         <configuration>
                             <url>https://dl.bintray.com/groovy/maven/${groovy.bin.package.file}</url>
                             <outputDirectory>${project.build.directory}</outputDirectory>
@@ -135,10 +134,10 @@
                     </execution>
                     <execution>
                         <id>Download Apache Groovy language source code</id>
-                        <phase>process-resources</phase>
                         <goals>
                             <goal>wget</goal>
                         </goals>
+                        <phase>process-resources</phase>
                         <configuration>
                             <url>http://apache.mirror.anlx.net/groovy/${groovy.version}/sources/apache-groovy-src-${groovy.version}.zip</url>
                             <outputDirectory>${rpm.opensource.dir}</outputDirectory>
@@ -154,43 +153,43 @@
                 <executions>
                     <execution>
                         <id>Unpack Apache Groovy language distribution</id>
-                        <phase>process-resources</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
+                        <phase>process-resources</phase>
                         <configuration>
                             <target>
                                 <!--Cannot use unzip Ant task - it does not preserve file permissions-->
                                 <exec dir="${rpm.build.dir}" executable="unzip">
-                                    <arg value="${project.build.directory}/${groovy.bin.package.file}"/>
+                                    <arg value="${project.build.directory}/${groovy.bin.package.file}" />
                                 </exec>
                             </target>
                         </configuration>
                     </execution>
                     <execution>
                         <id>Put rpm package resources</id>
-                        <phase>process-resources</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
+                        <phase>process-resources</phase>
                         <configuration>
                             <target>
                                 <copy todir="${rpm.build.dir}">
-                                    <fileset dir="${package.resources.build.dir}/rpm"/>
+                                    <fileset dir="${package.resources.build.dir}/rpm" />
                                 </copy>
                             </target>
                         </configuration>
                     </execution>
                     <execution>
                         <id>Put zip package resources</id>
-                        <phase>process-resources</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
+                        <phase>process-resources</phase>
                         <configuration>
                             <target>
                                 <copy todir="${zip.build.dir}">
-                                    <fileset dir="${package.resources.build.dir}/zip"/>
+                                    <fileset dir="${package.resources.build.dir}/zip" />
                                 </copy>
                             </target>
                         </configuration>
@@ -201,15 +200,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>rpm-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>Generate rpm package</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>rpm</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <group>${distribution.package.rpm.group}</group>
                     <name>${distribution.package.name}</name>
@@ -297,14 +287,21 @@
                     <defineStatements>
                         <!--Prevent rpmbuild from compiling Python files if there are any-->
                         <!--Prevent rpmbuild from repacking jars-->
-                        <defineStatement>
-                            __os_install_post %(echo '%{__os_install_post}' | \
+                        <defineStatement>__os_install_post %(echo '%{__os_install_post}' | \
                             sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g' | \
-                            sed -e 's!.*/usr/lib[^[:space:]]*/brp-java-repack-jars.*$!!g')
-                        </defineStatement>
+                            sed -e 's!.*/usr/lib[^[:space:]]*/brp-java-repack-jars.*$!!g')</defineStatement>
                     </defineStatements>
 
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>Generate rpm package</id>
+                        <goals>
+                            <goal>rpm</goal>
+                        </goals>
+                        <phase>prepare-package</phase>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -313,10 +310,10 @@
                 <executions>
                     <execution>
                         <id>Generate zip distribution</id>
-                        <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
+                        <phase>package</phase>
                         <configuration>
                             <finalName>${distribution.package.zip.name}</finalName>
                             <descriptors>
@@ -334,10 +331,10 @@
                     <execution>
                         <!--Disable default execution, because no jar in this module-->
                         <id>default-jar</id>
-                        <phase>none</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                        <phase>none</phase>
                     </execution>
                 </executions>
             </plugin>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.tashoyan.build-infra-demo</groupId>
@@ -9,11 +8,6 @@
     <packaging>pom</packaging>
     <name>Build Infrastructure Demo</name>
     <description>Demonstrates code quality enforcement with Maven</description>
-
-    <organization>
-        <name>${distribution.vendor.full.name}</name>
-        <url>https://github.com/tashoyan</url>
-    </organization>
 
     <modules>
         <module>build-resources</module>
@@ -24,8 +18,9 @@
     </modules>
 
     <!--TODO Format XML resources-->
+    <!--TODO Validate XML resources with schema-->
     <!--TODO Format shell resources-->
-    <!--TODO Format pom files-->
+    <!--TODO Other static code analysis tools for Scala-->
 
     <properties>
         <!--TODO Remove unused properties-->
@@ -80,6 +75,7 @@
         <rpm-maven-plugin.version>2.2.0</rpm-maven-plugin.version>
         <download-maven-plugin.version>1.4.0</download-maven-plugin.version>
         <versions-maven-plugin.version>2.5</versions-maven-plugin.version>
+        <sortpom-maven-plugin.version>2.10.0</sortpom-maven-plugin.version>
         <scalariform-maven-plugin.version>0.2.2</scalariform-maven-plugin.version>
         <scalastyle-maven-plugin.version>1.0.0</scalastyle-maven-plugin.version>
         <formatter-maven-plugin.version>2.7.3</formatter-maven-plugin.version>
@@ -159,26 +155,7 @@
             </dependency>
 
             <!--BEGIN: Dependency convergence-->
-            <!--<dependency>-->
-                <!--<groupId>org.scala-lang</groupId>-->
-                <!--<artifactId>scala-reflect</artifactId>-->
-                <!--<version>${compiler.scala.version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>commons-collections</groupId>-->
-                <!--<artifactId>commons-collections</artifactId>-->
-                <!--<version>${commons-collections.version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>commons-lang</groupId>-->
-                <!--<artifactId>commons-lang</artifactId>-->
-                <!--<version>${commons-lang.version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.scala-lang.modules</groupId>-->
-                <!--<artifactId>scala-xml_${compiler.scala.compat.version}</artifactId>-->
-                <!--<version>${scala-xml.version}</version>-->
-            <!--</dependency>-->
+            <!--TODO Remove if not needed-->
             <!--END: Dependency convergence-->
 
         </dependencies>
@@ -188,6 +165,22 @@
 
         <pluginManagement>
             <plugins>
+
+                <plugin>
+                    <groupId>com.github.ekryd.sortpom</groupId>
+                    <artifactId>sortpom-maven-plugin</artifactId>
+                    <version>${sortpom-maven-plugin.version}</version>
+                    <configuration>
+                        <predefinedSortOrder>custom_1</predefinedSortOrder>
+                        <lineSeparator>\n</lineSeparator>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <keepBlankLines>true</keepBlankLines>
+                        <sortDependencies>scope</sortDependencies>
+                        <createBackupFile>false</createBackupFile>
+                        <nrOfIndentSpace>4</nrOfIndentSpace>
+                        <expandEmptyElements>false</expandEmptyElements>
+                    </configuration>
+                </plugin>
 
                 <plugin>
                     <groupId>com.github.tashoyan</groupId>
@@ -211,13 +204,6 @@
                     <groupId>net.revelc.code.formatter</groupId>
                     <artifactId>formatter-maven-plugin</artifactId>
                     <version>${formatter-maven-plugin.version}</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>${project.groupId}</groupId>
-                            <artifactId>build-resources</artifactId>
-                            <version>${build-resources.version}</version>
-                        </dependency>
-                    </dependencies>
                     <configuration>
                         <compilerCompliance>${compiler.java.version}</compilerCompliance>
                         <compilerSource>${compiler.java.version}</compilerSource>
@@ -225,12 +211,6 @@
                         <lineEnding>LF</lineEnding>
                         <configFile>java-formatter.xml</configFile>
                     </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.scalastyle</groupId>
-                    <artifactId>scalastyle-maven-plugin</artifactId>
-                    <version>${scalastyle-maven-plugin.version}</version>
                     <dependencies>
                         <dependency>
                             <groupId>${project.groupId}</groupId>
@@ -238,6 +218,12 @@
                             <version>${build-resources.version}</version>
                         </dependency>
                     </dependencies>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.scalastyle</groupId>
+                    <artifactId>scalastyle-maven-plugin</artifactId>
+                    <version>${scalastyle-maven-plugin.version}</version>
                     <configuration>
                         <verbose>false</verbose>
                         <failOnViolation>true</failOnViolation>
@@ -249,6 +235,13 @@
                         <outputFile>${project.build.directory}/scalastyle-output.xml</outputFile>
                         <outputEncoding>${project.build.sourceEncoding}</outputEncoding>
                     </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>build-resources</artifactId>
+                            <version>${build-resources.version}</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
 
                 <plugin>
@@ -277,6 +270,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>${maven-checkstyle-plugin.version}</version>
+                    <configuration>
+                        <failOnViolation>true</failOnViolation>
+                        <violationSeverity>error</violationSeverity>
+                        <configLocation>java-checkstyle.xml</configLocation>
+                    </configuration>
                     <dependencies>
                         <dependency>
                             <groupId>${project.groupId}</groupId>
@@ -289,11 +287,6 @@
                             <version>${checkstyle.version}</version>
                         </dependency>
                     </dependencies>
-                    <configuration>
-                        <failOnViolation>true</failOnViolation>
-                        <violationSeverity>error</violationSeverity>
-                        <configLocation>java-checkstyle.xml</configLocation>
-                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -542,10 +535,10 @@
                 <executions>
                     <execution>
                         <id>Set distribution-related properties</id>
-                        <phase>validate</phase>
                         <goals>
                             <goal>regex-properties</goal>
                         </goals>
+                        <phase>validate</phase>
                         <configuration>
                             <regexPropertySettings>
                                 <regexPropertySetting>
@@ -581,10 +574,10 @@
                 <executions>
                     <execution>
                         <id>Display build environment</id>
-                        <phase>validate</phase>
                         <goals>
                             <goal>display-info</goal>
                         </goals>
+                        <phase>validate</phase>
                     </execution>
                     <execution>
                         <id>Check build environment</id>
@@ -599,7 +592,7 @@
                                 <requireMavenVersion>
                                     <version>3.2.3</version>
                                 </requireMavenVersion>
-                                <banDuplicatePomDependencyVersions/>
+                                <banDuplicatePomDependencyVersions />
                             </rules>
                         </configuration>
                     </execution>
@@ -610,7 +603,7 @@
                         </goals>
                         <configuration>
                             <rules>
-                                <DependencyConvergence/>
+                                <DependencyConvergence />
                             </rules>
                         </configuration>
                     </execution>
@@ -664,9 +657,28 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <groupId>com.github.ekryd.sortpom</groupId>
+                <artifactId>sortpom-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>Format pom-file</id>
+                        <goals>
+                            <goal>sort</goal>
+                        </goals>
+                        <phase>verify</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
 
     </build>
+
+    <organization>
+        <name>${distribution.vendor.full.name}</name>
+        <url>https://github.com/tashoyan</url>
+    </organization>
 
     <profiles>
 
@@ -695,10 +707,10 @@
                         <executions>
                             <execution>
                                 <id>format-scala</id>
-                                <phase>process-sources</phase>
                                 <goals>
                                     <goal>format</goal>
                                 </goals>
+                                <phase>process-sources</phase>
                             </execution>
                         </executions>
                     </plugin>
@@ -709,10 +721,10 @@
                         <executions>
                             <execution>
                                 <id>scalastyle</id>
-                                <phase>process-sources</phase>
                                 <goals>
                                     <goal>check</goal>
                                 </goals>
+                                <phase>process-sources</phase>
                             </execution>
                         </executions>
                     </plugin>
@@ -723,17 +735,17 @@
                         <executions>
                             <execution>
                                 <id>compile-scala</id>
-                                <phase>compile</phase>
                                 <goals>
                                     <goal>compile</goal>
                                 </goals>
+                                <phase>compile</phase>
                             </execution>
                             <execution>
                                 <id>testCompile-scala</id>
-                                <phase>test-compile</phase>
                                 <goals>
                                     <goal>testCompile</goal>
                                 </goals>
+                                <phase>test-compile</phase>
                             </execution>
                             <execution>
                                 <id>generate-apidoc</id>
@@ -756,17 +768,17 @@
                             <!--No Java code - disable Java compilation-->
                             <execution>
                                 <id>default-compile</id>
-                                <phase>none</phase>
                                 <goals>
                                     <goal>compile</goal>
                                 </goals>
+                                <phase>none</phase>
                             </execution>
                             <execution>
                                 <id>default-testCompile</id>
-                                <phase>none</phase>
                                 <goals>
                                     <goal>testCompile</goal>
                                 </goals>
+                                <phase>none</phase>
                             </execution>
                         </executions>
                     </plugin>
@@ -791,10 +803,10 @@
                             <!--No Java code - disable Java tests-->
                             <execution>
                                 <id>default-test</id>
-                                <phase>none</phase>
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
+                                <phase>none</phase>
                             </execution>
                         </executions>
                     </plugin>
@@ -823,10 +835,10 @@
                         <executions>
                             <execution>
                                 <id>format-java</id>
-                                <phase>process-sources</phase>
                                 <goals>
                                     <goal>format</goal>
                                 </goals>
+                                <phase>process-sources</phase>
                             </execution>
                         </executions>
                     </plugin>
