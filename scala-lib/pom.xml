@@ -32,8 +32,15 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <!--Provide SLF4J binding for tests-->
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <!--Provide logging configuration for unit tests-->
+            <groupId>${project.groupId}</groupId>
+            <artifactId>build-resources</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -53,8 +60,9 @@
                             </goals>
                             <configuration>
                                 <ignoredUnusedDeclaredDependencies>
-                                    <!--Provide SLF4J binding for tests-->
+                                    <!--Dependencies used in unit tests-->
                                     <ignoredUnusedDeclaredDependency>org.slf4j:slf4j-log4j12</ignoredUnusedDeclaredDependency>
+                                    <ignoredUnusedDeclaredDependency>${project.groupId}:build-resources</ignoredUnusedDeclaredDependency>
                                 </ignoredUnusedDeclaredDependencies>
                             </configuration>
                         </execution>

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
+import static com.github.tashoyan.demo.JavaLib.upperCaseString;
 import static com.github.tashoyan.demo.Lib.reverseString;
 
 /**
@@ -41,6 +42,7 @@ public final class Main {
 
         String str = "dummy";
         System.out.println("Reversed '" + str + "' is '" + reverseString(str) + "'");
+        System.out.println("Upper case '" + str + "' is '" + upperCaseString(str) + "'");
     }
 
     private static String getHeaderMessage() {

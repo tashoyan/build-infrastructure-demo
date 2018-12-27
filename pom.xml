@@ -21,6 +21,7 @@
     <!--TODO Validate XML resources with schema-->
     <!--TODO Format shell resources-->
     <!--TODO Other static code analysis tools for Scala-->
+    <!--TODO Collect open source licenses along with sources-->
 
     <properties>
         <!--TODO Remove unused properties-->
@@ -87,11 +88,9 @@
         <groovy.version>2.5.5</groovy.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <commons-io.version>2.6</commons-io.version>
-        <!--<scala-parser-combinators.version>1.0.4</scala-parser-combinators.version>-->
+        <junit.version>4.12</junit.version>
         <scalatest.version>3.0.4</scalatest.version>
         <scalactic.version>3.0.4</scalactic.version>
-        <!--<commons-collections.version>3.2.2</commons-collections.version>-->
-        <!--<commons-lang.version>2.6</commons-lang.version>-->
         <log4j.version>1.2.17</log4j.version>
         <slf4j.version>1.7.16</slf4j.version>
 
@@ -104,6 +103,11 @@
     <!--TODO Comments to all important settings to clarify why we do this-->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>build-resources</artifactId>
+                <version>${build-resources.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.scala-lang</groupId>
                 <artifactId>scala-library</artifactId>
@@ -143,6 +147,11 @@
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
                 <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.scalatest</groupId>
@@ -403,7 +412,6 @@
                 </plugin>
 
                 <plugin>
-                    <!--TODO Logging configuration from build-resources-->
                     <groupId>org.scalatest</groupId>
                     <artifactId>scalatest-maven-plugin</artifactId>
                     <version>${scalatest-maven-plugin.version}</version>
@@ -414,6 +422,7 @@
                         <testFailureIgnore>false</testFailureIgnore>
                         <systemProperties>
                             <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
+                            <log4j.configuration>log4j-unit-tests.xml</log4j.configuration>
                         </systemProperties>
                     </configuration>
                     <dependencies>
@@ -426,7 +435,6 @@
                 </plugin>
 
                 <plugin>
-                    <!--TODO Logging configuration from build-resources-->
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
                     <configuration>
@@ -437,6 +445,7 @@
                         <reuseForks>false</reuseForks>
                         <systemPropertyVariables>
                             <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
+                            <log4j.configuration>log4j-unit-tests.xml</log4j.configuration>
                         </systemPropertyVariables>
                     </configuration>
                 </plugin>
