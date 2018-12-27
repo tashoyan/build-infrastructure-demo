@@ -7,6 +7,7 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 /**
  * Provides a function to redirect Java Util Logging to SLF4J.
  */
+//TODO Provide the link to the doc
 public final class JulSlf4jBridge {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JulSlf4jBridge.class);
