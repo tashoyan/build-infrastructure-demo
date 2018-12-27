@@ -82,6 +82,7 @@
         <findbugs-maven-plugin.version>3.0.5</findbugs-maven-plugin.version>
         <maven-pmd-plugin.version>3.10.0</maven-pmd-plugin.version>
         <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
+        <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
 
         <groovy.version>2.5.5</groovy.version>
         <commons-lang3.version>3.7</commons-lang3.version>
@@ -372,6 +373,15 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>${maven-source-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc-plugin.version}</version>
+                    <configuration>
+                        <quiet>true</quiet>
+                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -671,6 +681,19 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>Attach sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
 
     </build>
@@ -734,6 +757,14 @@
                         <artifactId>scala-maven-plugin</artifactId>
                         <executions>
                             <execution>
+                                <!--Make Scala sources available for other plugins,
+                                for example maven-source-plugin-->
+                                <id>Add Scala sources to the project sources</id>
+                                <goals>
+                                    <goal>add-source</goal>
+                                </goals>
+                            </execution>
+                            <execution>
                                 <id>compile-scala</id>
                                 <goals>
                                     <goal>compile</goal>
@@ -748,7 +779,7 @@
                                 <phase>test-compile</phase>
                             </execution>
                             <execution>
-                                <id>generate-apidoc</id>
+                                <id>Generate Scala API doc</id>
                                 <goals>
                                     <goal>doc-jar</goal>
                                 </goals>
@@ -883,6 +914,19 @@
                                 <id>checkstyle</id>
                                 <goals>
                                     <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>Generate Java API doc</id>
+                                <goals>
+                                    <goal>jar</goal>
                                 </goals>
                             </execution>
                         </executions>
