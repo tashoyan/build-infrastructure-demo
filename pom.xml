@@ -165,7 +165,7 @@
             </dependency>
 
             <!--BEGIN: Dependency convergence-->
-            <!--TODO Remove if not needed-->
+            <!--TODO Some examples to illustrate dependency convergence-->
             <!--END: Dependency convergence-->
 
         </dependencies>
@@ -591,8 +591,10 @@
                             <regexPropertySettings>
                                 <regexPropertySetting>
                                     <!--
-                                    The product version as it should be according to the versioning policy.
-                                    Examples: 1.1.0SNAPSHOT, 1.1.0
+                                    The product version as it should be according to the rpm versioning policy.
+                                    Examples: 1.1.0SNAPSHOT, 1.1.0.
+                                    It is important, that the 'SNAPSHOT' prefix comes without the leading '-',
+                                    this makes it a part of the minor-minor component of the version: '0SNAPSHOT'.
                                     -->
                                     <name>distribution.version</name>
                                     <value>${project.version}</value>
@@ -645,6 +647,28 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>Check multi-module project is correct</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <ReactorModuleConvergence />
+                            </rules>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Check plugins have versions declared</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <RequirePluginVersions />
+                            </rules>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>Check transitive dependencies are consistent</id>
                         <goals>
                             <goal>enforce</goal>
@@ -666,7 +690,7 @@
                                     <excludes>
                                         <exclude>commons-logging:commons-logging</exclude>
                                     </excludes>
-                                    <message>Commons-logging should not be on the classpath. Use jcl-over-slf4j instead.</message>
+                                    <message>Commons-logging should not be in the classpath. Use jcl-over-slf4j instead.</message>
                                 </bannedDependencies>
                             </rules>
                         </configuration>
