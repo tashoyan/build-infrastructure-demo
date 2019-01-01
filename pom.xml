@@ -692,6 +692,12 @@
                                     </excludes>
                                     <message>Commons-logging should not be in the classpath. Use jcl-over-slf4j instead.</message>
                                 </bannedDependencies>
+                                <bannedDependencies>
+                                    <excludes>
+                                        <exclude>commons-lang:commons-lang</exclude>
+                                    </excludes>
+                                    <message>Commons-lang should not be used. Use commons-lang3 instead.</message>
+                                </bannedDependencies>
                             </rules>
                         </configuration>
                     </execution>
