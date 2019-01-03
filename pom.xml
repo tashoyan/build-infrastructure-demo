@@ -325,8 +325,6 @@
                     <version>${scala-maven-plugin.version}</version>
                     <configuration>
                         <args>
-                            <!--TODO Update for Scala 2.12-->
-                            <!--https://tpolecat.github.io/2017/04/25/scalac-flags.html-->
                             <arg>-deprecation</arg>
                             <arg>-feature</arg>
                             <arg>-unchecked</arg>
@@ -334,13 +332,8 @@
                             <arg>-Xfatal-warnings</arg>
                             <arg>-Yno-adapted-args</arg>
                             <arg>-Ywarn-dead-code</arg>
-                            <arg>-Ywarn-inaccessible</arg>
-                            <arg>-Ywarn-infer-any</arg>
-                            <arg>-Ywarn-nullary-override</arg>
-                            <arg>-Ywarn-nullary-unit</arg>
                             <arg>-Ywarn-numeric-widen</arg>
-                            <arg>-Ywarn-unused</arg>
-                            <arg>-Ywarn-unused-import</arg>
+                            <arg>-Ywarn-unused:_</arg>
                             <arg>-Ywarn-value-discard</arg>
                             <arg>-Xlint:_</arg>
                         </args>
