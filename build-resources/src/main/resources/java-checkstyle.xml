@@ -148,7 +148,6 @@
         <module name="IllegalType"/>
         <module name="InnerAssignment"/>
         <module name="MagicNumber"/>
-        <module name="MissingCtor"/>
         <module name="MissingSwitchDefault"/>
         <module name="ModifiedControlVariable"/>
         <module name="MultipleStringLiterals">
