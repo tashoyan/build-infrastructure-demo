@@ -79,7 +79,7 @@
         <xml-format-maven-plugin.version>3.0.7</xml-format-maven-plugin.version>
         <scalariform-maven-plugin.version>0.2.2</scalariform-maven-plugin.version>
         <scalastyle-maven-plugin.version>1.0.0</scalastyle-maven-plugin.version>
-        <formatter-maven-plugin.version>2.7.3</formatter-maven-plugin.version>
+        <formatter-maven-plugin.version>2.8.1</formatter-maven-plugin.version>
         <findbugs-maven-plugin.version>3.0.5</findbugs-maven-plugin.version>
         <maven-pmd-plugin.version>3.10.0</maven-pmd-plugin.version>
         <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
