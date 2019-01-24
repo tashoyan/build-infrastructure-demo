@@ -635,29 +635,9 @@
                                 <requireMavenVersion>
                                     <version>3.2.3</version>
                                 </requireMavenVersion>
-                                <banDuplicatePomDependencyVersions />
-                            </rules>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>Check multi-module project is correct</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
                                 <ReactorModuleConvergence />
-                            </rules>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>Check plugins have versions declared</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
                                 <RequirePluginVersions />
+                                <banDuplicatePomDependencyVersions />
                             </rules>
                         </configuration>
                     </execution>
