@@ -23,12 +23,12 @@
         </dependency>
         <dependency>
             <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_${compiler.scala.compat.version}</artifactId>
+            <artifactId>scalatest_${compiler.scala.binary.version}</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.scalactic</groupId>
-            <artifactId>scalactic_${compiler.scala.compat.version}</artifactId>
+            <artifactId>scalactic_${compiler.scala.binary.version}</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
