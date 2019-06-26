@@ -636,7 +636,6 @@
                                 <requireMavenVersion>
                                     <version>3.2.3</version>
                                 </requireMavenVersion>
-                                <ReactorModuleConvergence />
                                 <RequirePluginVersions />
                                 <banDuplicatePomDependencyVersions />
                             </rules>
