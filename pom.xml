@@ -403,6 +403,7 @@
                     <version>${maven-javadoc-plugin.version}</version>
                     <configuration>
                         <quiet>true</quiet>
+                        <source>${compiler.java.version}</source>
                     </configuration>
                 </plugin>
 
