@@ -81,7 +81,7 @@
         <scalastyle-maven-plugin.version>1.0.0</scalastyle-maven-plugin.version>
         <formatter-maven-plugin.version>2.8.1</formatter-maven-plugin.version>
         <spotbugs-maven-plugin.version>3.1.12.2</spotbugs-maven-plugin.version>
-        <maven-pmd-plugin.version>3.10.0</maven-pmd-plugin.version>
+        <maven-pmd-plugin.version>3.12.0</maven-pmd-plugin.version>
         <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>
         <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
 
