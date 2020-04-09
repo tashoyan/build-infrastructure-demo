@@ -86,17 +86,17 @@
         <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
 
         <groovy.version>2.5.5</groovy.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
+        <commons-lang3.version>3.10</commons-lang3.version>
         <commons-io.version>2.6</commons-io.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13</junit.version>
         <scalatest.version>3.0.8</scalatest.version>
         <scalactic.version>3.0.8</scalactic.version>
         <log4j.version>1.2.17</log4j.version>
         <slf4j.version>1.7.28</slf4j.version>
 
         <build-resources.version>${project.version}</build-resources.version>
-        <spotbugs.version>3.1.12</spotbugs.version>
-        <checkstyle.version>8.29</checkstyle.version>
+        <spotbugs.version>4.0.1</spotbugs.version>
+        <checkstyle.version>8.31</checkstyle.version>
 
     </properties>
 
