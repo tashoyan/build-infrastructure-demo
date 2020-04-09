@@ -1,9 +1,9 @@
 package com.github.tashoyan.demo
 
-import org.scalatest.FunSuite
-import Lib._
+import com.github.tashoyan.demo.Lib._
+import org.scalatest.funsuite.AnyFunSuite
 
-class LibTest extends FunSuite {
+class LibTest extends AnyFunSuite {
 
   test("reverseString - null arg") {
     intercept[NullPointerException] {
