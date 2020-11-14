@@ -96,7 +96,7 @@
 
     <build-resources.version>${project.version}</build-resources.version>
     <spotbugs.version>4.1.4</spotbugs.version>
-    <checkstyle.version>8.31</checkstyle.version>
+    <checkstyle.version>8.37</checkstyle.version>
 
   </properties>
 
