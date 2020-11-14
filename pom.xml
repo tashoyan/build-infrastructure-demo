@@ -218,7 +218,7 @@
               <!--We have a special plugin to format pom-files.-->
               <exclude>**/pom.xml</exclude>
               <!--Cannot format log4j XML configuration files:
-                            org.dom4j.DocumentException: Error on line 4 of document  : The prefix "log4j" for element "log4j:configuration" is not bound.-->
+              org.dom4j.DocumentException: Error on line 4 of document  : The prefix "log4j" for element "log4j:configuration" is not bound.-->
               <exclude>**/log4j*.xml</exclude>
             </excludes>
           </configuration>
@@ -481,7 +481,7 @@
           <version>${maven-surefire-plugin.version}</version>
           <configuration>
             <!--If left default, Jenkins marks a build with failed tests as 'unstable' instead of 'failed'.
-                        But we want to fail fast.-->
+            But we want to fail fast.-->
             <testFailureIgnore>false</testFailureIgnore>
             <forkCount>1</forkCount>
             <reuseForks>false</reuseForks>
@@ -552,9 +552,9 @@
             </delimiters>
             <archiverConfig>
               <!--
-                            directoryMode does not work for implicitly created directories
-                            See https://issues.apache.org/jira/browse/MASSEMBLY-494
-                            -->
+              directoryMode does not work for implicitly created directories
+              See https://issues.apache.org/jira/browse/MASSEMBLY-494
+              -->
               <defaultDirectoryMode>${mode.dir}</defaultDirectoryMode>
             </archiverConfig>
           </configuration>
@@ -604,11 +604,11 @@
               <regexPropertySettings>
                 <regexPropertySetting>
                   <!--
-                                    The product version as it should be according to the rpm versioning policy.
-                                    Examples: 1.1.0SNAPSHOT, 1.1.0.
-                                    It is important, that the 'SNAPSHOT' prefix comes without the leading '-',
-                                    this makes it a part of the minor-minor component of the version: '0SNAPSHOT'.
-                                    -->
+                  The product version as it should be according to the rpm versioning policy.
+                  Examples: 1.1.0SNAPSHOT, 1.1.0.
+                  It is important, that the 'SNAPSHOT' prefix comes without the leading '-',
+                  this makes it a part of the minor-minor component of the version: '0SNAPSHOT'.
+                  -->
                   <name>distribution.version</name>
                   <value>${project.version}</value>
                   <regex>-SNAPSHOT</regex>
@@ -617,9 +617,9 @@
                 </regexPropertySetting>
                 <regexPropertySetting>
                   <!--
-                                    The product rpm package file.
-                                    Example: product-name-1.1.0SNAPSHOT-1369.noarch.rpm
-                                    -->
+                  The product rpm package file.
+                  Example: product-name-1.1.0SNAPSHOT-1369.noarch.rpm
+                  -->
                   <name>distribution.package.rpm.file</name>
                   <value>${distribution.package.name}-${project.version}-${distribution.package.rpm.release}.noarch.rpm</value>
                   <regex>-SNAPSHOT</regex>
@@ -831,7 +831,7 @@
             <executions>
               <execution>
                 <!--Make Scala sources available for other plugins,
-                                for example maven-source-plugin-->
+                for example maven-source-plugin-->
                 <id>Add Scala sources to the project sources</id>
                 <goals>
                   <goal>add-source</goal>
