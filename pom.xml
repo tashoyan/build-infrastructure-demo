@@ -1,1005 +1,1005 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.tashoyan.build-infra-demo</groupId>
-    <artifactId>build-infrastructure-demo</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <name>Build Infrastructure Demo</name>
-    <description>Demonstrates code quality enforcement with Maven</description>
+  <groupId>com.github.tashoyan.build-infra-demo</groupId>
+  <artifactId>build-infrastructure-demo</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>Build Infrastructure Demo</name>
+  <description>Demonstrates code quality enforcement with Maven</description>
 
-    <modules>
-        <module>build-resources</module>
-        <module>scala-lib</module>
-        <module>java-main</module>
-        <module>package-resources</module>
-        <module>distribution</module>
-    </modules>
+  <modules>
+    <module>build-resources</module>
+    <module>scala-lib</module>
+    <module>java-main</module>
+    <module>package-resources</module>
+    <module>distribution</module>
+  </modules>
 
-    <!--TODO Validate XML resources with schema-->
-    <!--TODO Format shell resources-->
-    <!--TODO Other static code analysis tools for Scala-->
+  <!--TODO Validate XML resources with schema-->
+  <!--TODO Format shell resources-->
+  <!--TODO Other static code analysis tools for Scala-->
 
-    <properties>
-        <!--TODO Remove unused properties-->
+  <properties>
+    <!--TODO Remove unused properties-->
 
-        <!--TODO packaging properties-->
-        <distribution.vendor.full.name>Code Decency League</distribution.vendor.full.name>
-        <distribution.vendor.short.name>cdl</distribution.vendor.short.name>
-        <distribution.product.full.name>Build Infrastructure Demo</distribution.product.full.name>
-        <distribution.product.short.name>build-infra-demo</distribution.product.short.name>
-        <distribution.package.name>${distribution.vendor.short.name}-${distribution.product.short.name}</distribution.package.name>
-        <distribution.package.rpm.group>${distribution.vendor.short.name}</distribution.package.rpm.group>
-        <!-- When building on Jenkins: -Ddistribution.package.build.number=${BUILD_NUMBER} -->
-        <distribution.package.build.number>MUST_COME_FROM_CI</distribution.package.build.number>
-        <!--release is the number of times this version of the software has been packaged.
+    <!--TODO packaging properties-->
+    <distribution.vendor.full.name>Code Decency League</distribution.vendor.full.name>
+    <distribution.vendor.short.name>cdl</distribution.vendor.short.name>
+    <distribution.product.full.name>Build Infrastructure Demo</distribution.product.full.name>
+    <distribution.product.short.name>build-infra-demo</distribution.product.short.name>
+    <distribution.package.name>${distribution.vendor.short.name}-${distribution.product.short.name}</distribution.package.name>
+    <distribution.package.rpm.group>${distribution.vendor.short.name}</distribution.package.rpm.group>
+    <!-- When building on Jenkins: -Ddistribution.package.build.number=${BUILD_NUMBER} -->
+    <distribution.package.build.number>MUST_COME_FROM_CI</distribution.package.build.number>
+    <!--release is the number of times this version of the software has been packaged.
         http://ftp.rpm.org/max-rpm/ch-rpm-file-format.html -->
-        <distribution.package.rpm.release>${distribution.package.build.number}</distribution.package.rpm.release>
-        <!--TODO Can we use distribution.package.zip.file instead and include '.zip' - same ways as for the rpm file?-->
-        <distribution.package.zip.name>${distribution.package.name}-${distribution.version}-${distribution.package.build.number}</distribution.package.zip.name>
-        <distribution.default.base.install.dir>/opt</distribution.default.base.install.dir>
-        <distribution.default.base.data.dir>/var/opt</distribution.default.base.data.dir>
-        <distribution.default.install.dir>${distribution.default.base.install.dir}/${distribution.product.short.name}</distribution.default.install.dir>
-        <distribution.default.data.dir>${distribution.default.base.data.dir}/${distribution.product.short.name}</distribution.default.data.dir>
-        <distribution.groovy.install.dir>groovy-${groovy.version}</distribution.groovy.install.dir>
+    <distribution.package.rpm.release>${distribution.package.build.number}</distribution.package.rpm.release>
+    <!--TODO Can we use distribution.package.zip.file instead and include '.zip' - same ways as for the rpm file?-->
+    <distribution.package.zip.name>${distribution.package.name}-${distribution.version}-${distribution.package.build.number}</distribution.package.zip.name>
+    <distribution.default.base.install.dir>/opt</distribution.default.base.install.dir>
+    <distribution.default.base.data.dir>/var/opt</distribution.default.base.data.dir>
+    <distribution.default.install.dir>${distribution.default.base.install.dir}/${distribution.product.short.name}</distribution.default.install.dir>
+    <distribution.default.data.dir>${distribution.default.base.data.dir}/${distribution.product.short.name}</distribution.default.data.dir>
+    <distribution.groovy.install.dir>groovy-${groovy.version}</distribution.groovy.install.dir>
 
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <resources.filter.delimiter>@{*}</resources.filter.delimiter>
-        <mode.file.exec>0755</mode.file.exec>
-        <mode.file.data>0644</mode.file.data>
-        <mode.dir>0755</mode.dir>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <resources.filter.delimiter>@{*}</resources.filter.delimiter>
+    <mode.file.exec>0755</mode.file.exec>
+    <mode.file.data>0644</mode.file.data>
+    <mode.dir>0755</mode.dir>
 
-        <compiler.java.version>1.8</compiler.java.version>
-        <compiler.scala.version>2.12.12</compiler.scala.version>
-        <compiler.scala.binary.version>2.12</compiler.scala.binary.version>
+    <compiler.java.version>1.8</compiler.java.version>
+    <compiler.scala.version>2.12.12</compiler.scala.version>
+    <compiler.scala.binary.version>2.12</compiler.scala.binary.version>
 
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <build-helper-maven-plugin.version>3.2.0</build-helper-maven-plugin.version>
-        <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
-        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
-        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
-        <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
-        <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
-        <license-maven-plugin.version>2.0.0</license-maven-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-        <scalatest-maven-plugin.version>2.0.2</scalatest-maven-plugin.version>
-        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
-        <scala-maven-plugin.version>4.4.0</scala-maven-plugin.version>
-        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
-        <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
-        <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
-        <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
-        <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
-        <rpm-maven-plugin.version>2.2.0</rpm-maven-plugin.version>
-        <download-maven-plugin.version>1.6.0</download-maven-plugin.version>
-        <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
-        <sortpom-maven-plugin.version>2.12.0</sortpom-maven-plugin.version>
-        <xml-format-maven-plugin.version>3.1.2</xml-format-maven-plugin.version>
-        <scalariform-maven-plugin.version>0.2.3</scalariform-maven-plugin.version>
-        <scalastyle-maven-plugin.version>1.0.0</scalastyle-maven-plugin.version>
-        <formatter-maven-plugin.version>2.13.0</formatter-maven-plugin.version>
-        <spotbugs-maven-plugin.version>4.1.4</spotbugs-maven-plugin.version>
-        <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
-        <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
-        <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+    <build-helper-maven-plugin.version>3.2.0</build-helper-maven-plugin.version>
+    <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
+    <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
+    <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+    <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
+    <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
+    <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
+    <license-maven-plugin.version>2.0.0</license-maven-plugin.version>
+    <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+    <scalatest-maven-plugin.version>2.0.2</scalatest-maven-plugin.version>
+    <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
+    <scala-maven-plugin.version>4.4.0</scala-maven-plugin.version>
+    <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+    <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
+    <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
+    <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
+    <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
+    <rpm-maven-plugin.version>2.2.0</rpm-maven-plugin.version>
+    <download-maven-plugin.version>1.6.0</download-maven-plugin.version>
+    <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
+    <sortpom-maven-plugin.version>2.12.0</sortpom-maven-plugin.version>
+    <xml-format-maven-plugin.version>3.1.2</xml-format-maven-plugin.version>
+    <scalariform-maven-plugin.version>0.2.3</scalariform-maven-plugin.version>
+    <scalastyle-maven-plugin.version>1.0.0</scalastyle-maven-plugin.version>
+    <formatter-maven-plugin.version>2.13.0</formatter-maven-plugin.version>
+    <spotbugs-maven-plugin.version>4.1.4</spotbugs-maven-plugin.version>
+    <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
+    <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
+    <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
 
-        <groovy.version>2.5.5</groovy.version>
-        <commons-lang3.version>3.10</commons-lang3.version>
-        <commons-io.version>2.6</commons-io.version>
-        <junit.version>4.13</junit.version>
-        <scalatest.version>3.1.1</scalatest.version>
-        <scalactic.version>3.1.1</scalactic.version>
-        <log4j.version>1.2.17</log4j.version>
-        <slf4j.version>1.7.28</slf4j.version>
+    <groovy.version>2.5.5</groovy.version>
+    <commons-lang3.version>3.10</commons-lang3.version>
+    <commons-io.version>2.6</commons-io.version>
+    <junit.version>4.13</junit.version>
+    <scalatest.version>3.1.1</scalatest.version>
+    <scalactic.version>3.1.1</scalactic.version>
+    <log4j.version>1.2.17</log4j.version>
+    <slf4j.version>1.7.28</slf4j.version>
 
-        <build-resources.version>${project.version}</build-resources.version>
-        <spotbugs.version>4.0.1</spotbugs.version>
-        <checkstyle.version>8.31</checkstyle.version>
+    <build-resources.version>${project.version}</build-resources.version>
+    <spotbugs.version>4.0.1</spotbugs.version>
+    <checkstyle.version>8.31</checkstyle.version>
 
-    </properties>
+  </properties>
 
-    <!--TODO some dependency with commons-logging as a transitive dependency to illustrate exclusion-->
-    <!--TODO Comments to all important settings to clarify why we do this-->
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>build-resources</artifactId>
-                <version>${build-resources.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.scala-lang</groupId>
-                <artifactId>scala-library</artifactId>
-                <version>${compiler.scala.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>${commons-io.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jcl-over-slf4j</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jul-to-slf4j</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>${log4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.scalatest</groupId>
-                <artifactId>scalatest_${compiler.scala.binary.version}</artifactId>
-                <version>${scalatest.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.scalactic</groupId>
-                <artifactId>scalactic_${compiler.scala.binary.version}</artifactId>
-                <version>${scalactic.version}</version>
-            </dependency>
+  <!--TODO some dependency with commons-logging as a transitive dependency to illustrate exclusion-->
+  <!--TODO Comments to all important settings to clarify why we do this-->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>build-resources</artifactId>
+        <version>${build-resources.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.scala-lang</groupId>
+        <artifactId>scala-library</artifactId>
+        <version>${compiler.scala.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${commons-lang3.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>${commons-io.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jcl-over-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jul-to-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.scalatest</groupId>
+        <artifactId>scalatest_${compiler.scala.binary.version}</artifactId>
+        <version>${scalatest.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.scalactic</groupId>
+        <artifactId>scalactic_${compiler.scala.binary.version}</artifactId>
+        <version>${scalactic.version}</version>
+      </dependency>
 
-            <!--BEGIN: Dependency convergence-->
-            <!--TODO Some examples to illustrate dependency convergence-->
-            <!--END: Dependency convergence-->
+      <!--BEGIN: Dependency convergence-->
+      <!--TODO Some examples to illustrate dependency convergence-->
+      <!--END: Dependency convergence-->
 
-        </dependencies>
-    </dependencyManagement>
+    </dependencies>
+  </dependencyManagement>
 
-    <build>
+  <build>
 
-        <pluginManagement>
-            <plugins>
+    <pluginManagement>
+      <plugins>
 
-                <plugin>
-                    <groupId>com.github.ekryd.sortpom</groupId>
-                    <artifactId>sortpom-maven-plugin</artifactId>
-                    <version>${sortpom-maven-plugin.version}</version>
-                    <configuration>
-                        <predefinedSortOrder>custom_1</predefinedSortOrder>
-                        <lineSeparator>\n</lineSeparator>
-                        <encoding>${project.build.sourceEncoding}</encoding>
-                        <keepBlankLines>true</keepBlankLines>
-                        <sortDependencies>scope</sortDependencies>
-                        <createBackupFile>false</createBackupFile>
-                        <nrOfIndentSpace>4</nrOfIndentSpace>
-                        <expandEmptyElements>false</expandEmptyElements>
-                        <keepTimestamp>true</keepTimestamp>
-                    </configuration>
-                </plugin>
+        <plugin>
+          <groupId>com.github.ekryd.sortpom</groupId>
+          <artifactId>sortpom-maven-plugin</artifactId>
+          <version>${sortpom-maven-plugin.version}</version>
+          <configuration>
+            <predefinedSortOrder>custom_1</predefinedSortOrder>
+            <lineSeparator>\n</lineSeparator>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <keepBlankLines>true</keepBlankLines>
+            <sortDependencies>scope</sortDependencies>
+            <createBackupFile>false</createBackupFile>
+            <nrOfIndentSpace>2</nrOfIndentSpace>
+            <expandEmptyElements>false</expandEmptyElements>
+            <keepTimestamp>true</keepTimestamp>
+          </configuration>
+        </plugin>
 
-                <plugin>
-                    <groupId>au.com.acegi</groupId>
-                    <artifactId>xml-format-maven-plugin</artifactId>
-                    <version>${xml-format-maven-plugin.version}</version>
-                    <configuration>
-                        <encoding>${project.build.sourceEncoding}</encoding>
-                        <expandEmptyElements>false</expandEmptyElements>
-                        <indentSize>4</indentSize>
-                        <lineEnding>LF</lineEnding>
-                        <newLineAfterDeclaration>true</newLineAfterDeclaration>
-                        <excludes>
-                            <!--We have a special plugin to format pom-files.-->
-                            <exclude>**/pom.xml</exclude>
-                            <!--Cannot format log4j XML configuration files:
+        <plugin>
+          <groupId>au.com.acegi</groupId>
+          <artifactId>xml-format-maven-plugin</artifactId>
+          <version>${xml-format-maven-plugin.version}</version>
+          <configuration>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <expandEmptyElements>false</expandEmptyElements>
+            <indentSize>2</indentSize>
+            <lineEnding>LF</lineEnding>
+            <newLineAfterDeclaration>true</newLineAfterDeclaration>
+            <excludes>
+              <!--We have a special plugin to format pom-files.-->
+              <exclude>**/pom.xml</exclude>
+              <!--Cannot format log4j XML configuration files:
                             org.dom4j.DocumentException: Error on line 4 of document  : The prefix "log4j" for element "log4j:configuration" is not bound.-->
-                            <exclude>**/log4j*.xml</exclude>
-                        </excludes>
-                    </configuration>
-                </plugin>
+              <exclude>**/log4j*.xml</exclude>
+            </excludes>
+          </configuration>
+        </plugin>
 
-                <plugin>
-                    <groupId>com.github.tashoyan</groupId>
-                    <artifactId>scalariform-maven-plugin</artifactId>
-                    <version>${scalariform-maven-plugin.version}</version>
-                    <configuration>
-                        <firstArgumentOnNewline>Force</firstArgumentOnNewline>
-                        <firstParameterOnNewline>Force</firstParameterOnNewline>
-                        <allowParamGroupsOnNewlines>true</allowParamGroupsOnNewlines>
-                        <danglingCloseParenthesis>Force</danglingCloseParenthesis>
-                        <doubleIndentConstructorArguments>true</doubleIndentConstructorArguments>
-                        <doubleIndentMethodDeclaration>true</doubleIndentMethodDeclaration>
-                        <newlineAtEndOfFile>true</newlineAtEndOfFile>
-                        <placeScaladocAsterisksBeneathSecondAsterisk>true</placeScaladocAsterisksBeneathSecondAsterisk>
-                        <singleCasePatternOnNewline>false</singleCasePatternOnNewline>
-                        <spacesAroundMultiImports>false</spacesAroundMultiImports>
-                    </configuration>
-                </plugin>
+        <plugin>
+          <groupId>com.github.tashoyan</groupId>
+          <artifactId>scalariform-maven-plugin</artifactId>
+          <version>${scalariform-maven-plugin.version}</version>
+          <configuration>
+            <firstArgumentOnNewline>Force</firstArgumentOnNewline>
+            <firstParameterOnNewline>Force</firstParameterOnNewline>
+            <allowParamGroupsOnNewlines>true</allowParamGroupsOnNewlines>
+            <danglingCloseParenthesis>Force</danglingCloseParenthesis>
+            <doubleIndentConstructorArguments>true</doubleIndentConstructorArguments>
+            <doubleIndentMethodDeclaration>true</doubleIndentMethodDeclaration>
+            <newlineAtEndOfFile>true</newlineAtEndOfFile>
+            <placeScaladocAsterisksBeneathSecondAsterisk>true</placeScaladocAsterisksBeneathSecondAsterisk>
+            <singleCasePatternOnNewline>false</singleCasePatternOnNewline>
+            <spacesAroundMultiImports>false</spacesAroundMultiImports>
+          </configuration>
+        </plugin>
 
-                <plugin>
-                    <groupId>net.revelc.code.formatter</groupId>
-                    <artifactId>formatter-maven-plugin</artifactId>
-                    <version>${formatter-maven-plugin.version}</version>
-                    <configuration>
-                        <compilerCompliance>${compiler.java.version}</compilerCompliance>
-                        <compilerSource>${compiler.java.version}</compilerSource>
-                        <compilerTargetPlatform>${compiler.java.version}</compilerTargetPlatform>
-                        <lineEnding>LF</lineEnding>
-                        <configFile>java-formatter.xml</configFile>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>${project.groupId}</groupId>
-                            <artifactId>build-resources</artifactId>
-                            <version>${build-resources.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
+        <plugin>
+          <groupId>net.revelc.code.formatter</groupId>
+          <artifactId>formatter-maven-plugin</artifactId>
+          <version>${formatter-maven-plugin.version}</version>
+          <configuration>
+            <compilerCompliance>${compiler.java.version}</compilerCompliance>
+            <compilerSource>${compiler.java.version}</compilerSource>
+            <compilerTargetPlatform>${compiler.java.version}</compilerTargetPlatform>
+            <lineEnding>LF</lineEnding>
+            <configFile>java-formatter.xml</configFile>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>${project.groupId}</groupId>
+              <artifactId>build-resources</artifactId>
+              <version>${build-resources.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.scalastyle</groupId>
-                    <artifactId>scalastyle-maven-plugin</artifactId>
-                    <version>${scalastyle-maven-plugin.version}</version>
-                    <configuration>
-                        <verbose>false</verbose>
-                        <failOnViolation>true</failOnViolation>
-                        <includeTestSourceDirectory>false</includeTestSourceDirectory>
-                        <failOnWarning>true</failOnWarning>
-                        <sourceDirectory>${project.basedir}/src/main/scala</sourceDirectory>
-                        <testSourceDirectory>${project.basedir}/src/test/scala</testSourceDirectory>
-                        <configLocation>scala-scalastyle.xml</configLocation>
-                        <outputFile>${project.build.directory}/scalastyle-output.xml</outputFile>
-                        <outputEncoding>${project.build.sourceEncoding}</outputEncoding>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>${project.groupId}</groupId>
-                            <artifactId>build-resources</artifactId>
-                            <version>${build-resources.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
+        <plugin>
+          <groupId>org.scalastyle</groupId>
+          <artifactId>scalastyle-maven-plugin</artifactId>
+          <version>${scalastyle-maven-plugin.version}</version>
+          <configuration>
+            <verbose>false</verbose>
+            <failOnViolation>true</failOnViolation>
+            <includeTestSourceDirectory>false</includeTestSourceDirectory>
+            <failOnWarning>true</failOnWarning>
+            <sourceDirectory>${project.basedir}/src/main/scala</sourceDirectory>
+            <testSourceDirectory>${project.basedir}/src/test/scala</testSourceDirectory>
+            <configLocation>scala-scalastyle.xml</configLocation>
+            <outputFile>${project.build.directory}/scalastyle-output.xml</outputFile>
+            <outputEncoding>${project.build.sourceEncoding}</outputEncoding>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>${project.groupId}</groupId>
+              <artifactId>build-resources</artifactId>
+              <version>${build-resources.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
 
-                <plugin>
-                    <groupId>com.github.spotbugs</groupId>
-                    <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>${spotbugs-maven-plugin.version}</version>
-                    <configuration>
-                        <failOnError>true</failOnError>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.github.spotbugs</groupId>
-                            <artifactId>spotbugs</artifactId>
-                            <version>${spotbugs.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
+        <plugin>
+          <groupId>com.github.spotbugs</groupId>
+          <artifactId>spotbugs-maven-plugin</artifactId>
+          <version>${spotbugs-maven-plugin.version}</version>
+          <configuration>
+            <failOnError>true</failOnError>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>com.github.spotbugs</groupId>
+              <artifactId>spotbugs</artifactId>
+              <version>${spotbugs.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-pmd-plugin</artifactId>
-                    <version>${maven-pmd-plugin.version}</version>
-                    <configuration>
-                        <failOnViolation>true</failOnViolation>
-                        <printFailingErrors>true</printFailingErrors>
-                        <verbose>true</verbose>
-                        <!--Disable Maven warning: [WARNING] Unable to locate Source XRef to link to - DISABLED-->
-                        <linkXRef>false</linkXRef>
-                    </configuration>
-                </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-pmd-plugin</artifactId>
+          <version>${maven-pmd-plugin.version}</version>
+          <configuration>
+            <failOnViolation>true</failOnViolation>
+            <printFailingErrors>true</printFailingErrors>
+            <verbose>true</verbose>
+            <!--Disable Maven warning: [WARNING] Unable to locate Source XRef to link to - DISABLED-->
+            <linkXRef>false</linkXRef>
+          </configuration>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${maven-checkstyle-plugin.version}</version>
-                    <configuration>
-                        <failOnViolation>true</failOnViolation>
-                        <violationSeverity>error</violationSeverity>
-                        <configLocation>java-checkstyle.xml</configLocation>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>${project.groupId}</groupId>
-                            <artifactId>build-resources</artifactId>
-                            <version>${build-resources.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>com.puppycrawl.tools</groupId>
-                            <artifactId>checkstyle</artifactId>
-                            <version>${checkstyle.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>${maven-checkstyle-plugin.version}</version>
+          <configuration>
+            <failOnViolation>true</failOnViolation>
+            <violationSeverity>error</violationSeverity>
+            <configLocation>java-checkstyle.xml</configLocation>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>${project.groupId}</groupId>
+              <artifactId>build-resources</artifactId>
+              <version>${build-resources.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>${checkstyle.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
 
-                <plugin>
-                    <groupId>net.alchim31.maven</groupId>
-                    <artifactId>scala-maven-plugin</artifactId>
-                    <version>${scala-maven-plugin.version}</version>
-                    <configuration>
-                        <args>
-                            <arg>-deprecation</arg>
-                            <arg>-feature</arg>
-                            <arg>-unchecked</arg>
-                            <arg>-explaintypes</arg>
-                            <arg>-Xfatal-warnings</arg>
-                            <arg>-Yno-adapted-args</arg>
-                            <arg>-Ywarn-dead-code</arg>
-                            <arg>-Ywarn-numeric-widen</arg>
-                            <arg>-Ywarn-unused:_</arg>
-                            <arg>-Ywarn-value-discard</arg>
-                            <arg>-Xlint:_</arg>
-                        </args>
-                        <jvmArgs>
-                            <jvmArg>-Xmx2048m</jvmArg>
-                        </jvmArgs>
-                        <source>${compiler.java.version}</source>
-                        <target>${compiler.java.version}</target>
-                        <encoding>${project.build.sourceEncoding}</encoding>
-                        <scalaCompatVersion>${compiler.scala.binary.version}</scalaCompatVersion>
-                        <checkMultipleScalaVersions>true</checkMultipleScalaVersions>
-                        <failOnMultipleScalaVersions>true</failOnMultipleScalaVersions>
-                        <sendJavaToScalac>false</sendJavaToScalac>
-                    </configuration>
-                </plugin>
+        <plugin>
+          <groupId>net.alchim31.maven</groupId>
+          <artifactId>scala-maven-plugin</artifactId>
+          <version>${scala-maven-plugin.version}</version>
+          <configuration>
+            <args>
+              <arg>-deprecation</arg>
+              <arg>-feature</arg>
+              <arg>-unchecked</arg>
+              <arg>-explaintypes</arg>
+              <arg>-Xfatal-warnings</arg>
+              <arg>-Yno-adapted-args</arg>
+              <arg>-Ywarn-dead-code</arg>
+              <arg>-Ywarn-numeric-widen</arg>
+              <arg>-Ywarn-unused:_</arg>
+              <arg>-Ywarn-value-discard</arg>
+              <arg>-Xlint:_</arg>
+            </args>
+            <jvmArgs>
+              <jvmArg>-Xmx2048m</jvmArg>
+            </jvmArgs>
+            <source>${compiler.java.version}</source>
+            <target>${compiler.java.version}</target>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <scalaCompatVersion>${compiler.scala.binary.version}</scalaCompatVersion>
+            <checkMultipleScalaVersions>true</checkMultipleScalaVersions>
+            <failOnMultipleScalaVersions>true</failOnMultipleScalaVersions>
+            <sendJavaToScalac>false</sendJavaToScalac>
+          </configuration>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven-compiler-plugin.version}</version>
-                    <configuration>
-                        <source>${compiler.java.version}</source>
-                        <target>${compiler.java.version}</target>
-                        <fork>true</fork>
-                        <compilerArgs>
-                            <arg>-Xlint:all</arg>
-                            <arg>-deprecation</arg>
-                            <arg>-Werror</arg>
-                        </compilerArgs>
-                    </configuration>
-                </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+          <configuration>
+            <source>${compiler.java.version}</source>
+            <target>${compiler.java.version}</target>
+            <fork>true</fork>
+            <compilerArgs>
+              <arg>-Xlint:all</arg>
+              <arg>-deprecation</arg>
+              <arg>-Werror</arg>
+            </compilerArgs>
+          </configuration>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>${build-helper-maven-plugin.version}</version>
-                </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>${build-helper-maven-plugin.version}</version>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-clean-plugin</artifactId>
-                    <version>${maven-clean-plugin.version}</version>
-                </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>${maven-clean-plugin.version}</version>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>${maven-resources-plugin.version}</version>
-                    <configuration>
-                        <delimiters>
-                            <!-- Avoid interfering with Shell or Spring - use non-standard delimiters -->
-                            <delimiter>${resources.filter.delimiter}</delimiter>
-                        </delimiters>
-                        <useDefaultDelimiters>false</useDefaultDelimiters>
-                    </configuration>
-                </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>${maven-resources-plugin.version}</version>
+          <configuration>
+            <delimiters>
+              <!-- Avoid interfering with Shell or Spring - use non-standard delimiters -->
+              <delimiter>${resources.filter.delimiter}</delimiter>
+            </delimiters>
+            <useDefaultDelimiters>false</useDefaultDelimiters>
+          </configuration>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>${maven-source-plugin.version}</version>
-                </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${maven-source-plugin.version}</version>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${maven-javadoc-plugin.version}</version>
-                    <configuration>
-                        <quiet>true</quiet>
-                        <source>${compiler.java.version}</source>
-                    </configuration>
-                </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${maven-javadoc-plugin.version}</version>
+          <configuration>
+            <quiet>true</quiet>
+            <source>${compiler.java.version}</source>
+          </configuration>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>${maven-deploy-plugin.version}</version>
-                </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>${maven-deploy-plugin.version}</version>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>${maven-install-plugin.version}</version>
-                </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>${maven-install-plugin.version}</version>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>${maven-site-plugin.version}</version>
-                </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>${maven-site-plugin.version}</version>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>license-maven-plugin</artifactId>
-                    <version>${license-maven-plugin.version}</version>
-                    <configuration>
-                        <excludedGroups>${project.groupId}</excludedGroups>
-                    </configuration>
-                </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <version>${license-maven-plugin.version}</version>
+          <configuration>
+            <excludedGroups>${project.groupId}</excludedGroups>
+          </configuration>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.scalatest</groupId>
-                    <artifactId>scalatest-maven-plugin</artifactId>
-                    <version>${scalatest-maven-plugin.version}</version>
-                    <configuration>
-                        <parallel>false</parallel>
-                        <junitxml>.</junitxml>
-                        <filereports>WDF TestSuite.txt</filereports>
-                        <testFailureIgnore>false</testFailureIgnore>
-                        <systemProperties>
-                            <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
-                            <log4j.configuration>log4j-unit-tests.xml</log4j.configuration>
-                        </systemProperties>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.scalatest</groupId>
-                            <artifactId>scalatest_${compiler.scala.binary.version}</artifactId>
-                            <version>${scalatest.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
+        <plugin>
+          <groupId>org.scalatest</groupId>
+          <artifactId>scalatest-maven-plugin</artifactId>
+          <version>${scalatest-maven-plugin.version}</version>
+          <configuration>
+            <parallel>false</parallel>
+            <junitxml>.</junitxml>
+            <filereports>WDF TestSuite.txt</filereports>
+            <testFailureIgnore>false</testFailureIgnore>
+            <systemProperties>
+              <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
+              <log4j.configuration>log4j-unit-tests.xml</log4j.configuration>
+            </systemProperties>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>org.scalatest</groupId>
+              <artifactId>scalatest_${compiler.scala.binary.version}</artifactId>
+              <version>${scalatest.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
 
-                <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
-                    <configuration>
-                        <!--If left default, Jenkins marks a build with failed tests as 'unstable' instead of 'failed'.
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${maven-surefire-plugin.version}</version>
+          <configuration>
+            <!--If left default, Jenkins marks a build with failed tests as 'unstable' instead of 'failed'.
                         But we want to fail fast.-->
-                        <testFailureIgnore>false</testFailureIgnore>
-                        <forkCount>1</forkCount>
-                        <reuseForks>false</reuseForks>
-                        <systemPropertyVariables>
-                            <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
-                            <log4j.configuration>log4j-unit-tests.xml</log4j.configuration>
-                        </systemPropertyVariables>
-                    </configuration>
-                </plugin>
+            <testFailureIgnore>false</testFailureIgnore>
+            <forkCount>1</forkCount>
+            <reuseForks>false</reuseForks>
+            <systemPropertyVariables>
+              <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
+              <log4j.configuration>log4j-unit-tests.xml</log4j.configuration>
+            </systemPropertyVariables>
+          </configuration>
+        </plugin>
 
-                <plugin>
-                    <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>${maven-enforcer-plugin.version}</version>
-                    <configuration>
-                        <failFast>true</failFast>
-                    </configuration>
-                </plugin>
+        <plugin>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>${maven-enforcer-plugin.version}</version>
+          <configuration>
+            <failFast>true</failFast>
+          </configuration>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>${maven-jar-plugin.version}</version>
-                    <configuration>
-                        <archive>
-                            <manifest>
-                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                            </manifest>
-                        </archive>
-                    </configuration>
-                </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${maven-jar-plugin.version}</version>
+          <configuration>
+            <archive>
+              <manifest>
+                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              </manifest>
+            </archive>
+          </configuration>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-shade-plugin</artifactId>
-                    <version>${maven-shade-plugin.version}</version>
-                    <configuration>
-                        <createDependencyReducedPom>false</createDependencyReducedPom>
-                        <filters>
-                            <filter>
-                                <!-- Workaround for java.lang.SecurityException: Invalid signature file digest for Manifest main attributes-->
-                                <artifact>*:*</artifact>
-                                <excludes>
-                                    <exclude>META-INF/*.SF</exclude>
-                                    <exclude>META-INF/*.DSA</exclude>
-                                    <exclude>META-INF/*.RSA</exclude>
-                                </excludes>
-                            </filter>
-                        </filters>
-                    </configuration>
-                </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>${maven-shade-plugin.version}</version>
+          <configuration>
+            <createDependencyReducedPom>false</createDependencyReducedPom>
+            <filters>
+              <filter>
+                <!-- Workaround for java.lang.SecurityException: Invalid signature file digest for Manifest main attributes-->
+                <artifact>*:*</artifact>
+                <excludes>
+                  <exclude>META-INF/*.SF</exclude>
+                  <exclude>META-INF/*.DSA</exclude>
+                  <exclude>META-INF/*.RSA</exclude>
+                </excludes>
+              </filter>
+            </filters>
+          </configuration>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>${maven-dependency-plugin.version}</version>
-                </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>${maven-dependency-plugin.version}</version>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>${maven-assembly-plugin.version}</version>
-                    <configuration>
-                        <appendAssemblyId>false</appendAssemblyId>
-                        <attach>true</attach>
-                        <delimiters>
-                            <delimiter>${resources.filter.delimiter}</delimiter>
-                        </delimiters>
-                        <archiverConfig>
-                            <!--
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>${maven-assembly-plugin.version}</version>
+          <configuration>
+            <appendAssemblyId>false</appendAssemblyId>
+            <attach>true</attach>
+            <delimiters>
+              <delimiter>${resources.filter.delimiter}</delimiter>
+            </delimiters>
+            <archiverConfig>
+              <!--
                             directoryMode does not work for implicitly created directories
                             See https://issues.apache.org/jira/browse/MASSEMBLY-494
                             -->
-                            <defaultDirectoryMode>${mode.dir}</defaultDirectoryMode>
-                        </archiverConfig>
-                    </configuration>
-                </plugin>
+              <defaultDirectoryMode>${mode.dir}</defaultDirectoryMode>
+            </archiverConfig>
+          </configuration>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-antrun-plugin</artifactId>
-                    <version>${maven-antrun-plugin.version}</version>
-                </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>${maven-antrun-plugin.version}</version>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>rpm-maven-plugin</artifactId>
-                    <version>${rpm-maven-plugin.version}</version>
-                    <extensions>true</extensions>
-                </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>rpm-maven-plugin</artifactId>
+          <version>${rpm-maven-plugin.version}</version>
+          <extensions>true</extensions>
+        </plugin>
 
-                <plugin>
-                    <groupId>com.googlecode.maven-download-plugin</groupId>
-                    <artifactId>download-maven-plugin</artifactId>
-                    <version>${download-maven-plugin.version}</version>
-                </plugin>
+        <plugin>
+          <groupId>com.googlecode.maven-download-plugin</groupId>
+          <artifactId>download-maven-plugin</artifactId>
+          <version>${download-maven-plugin.version}</version>
+        </plugin>
 
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>versions-maven-plugin</artifactId>
-                    <version>${versions-maven-plugin.version}</version>
-                </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>${versions-maven-plugin.version}</version>
+        </plugin>
 
-            </plugins>
-        </pluginManagement>
+      </plugins>
+    </pluginManagement>
 
-        <plugins>
+    <plugins>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>Set distribution-related properties</id>
-                        <goals>
-                            <goal>regex-properties</goal>
-                        </goals>
-                        <phase>validate</phase>
-                        <configuration>
-                            <regexPropertySettings>
-                                <regexPropertySetting>
-                                    <!--
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>Set distribution-related properties</id>
+            <goals>
+              <goal>regex-properties</goal>
+            </goals>
+            <phase>validate</phase>
+            <configuration>
+              <regexPropertySettings>
+                <regexPropertySetting>
+                  <!--
                                     The product version as it should be according to the rpm versioning policy.
                                     Examples: 1.1.0SNAPSHOT, 1.1.0.
                                     It is important, that the 'SNAPSHOT' prefix comes without the leading '-',
                                     this makes it a part of the minor-minor component of the version: '0SNAPSHOT'.
                                     -->
-                                    <name>distribution.version</name>
-                                    <value>${project.version}</value>
-                                    <regex>-SNAPSHOT</regex>
-                                    <replacement>SNAPSHOT</replacement>
-                                    <failIfNoMatch>false</failIfNoMatch>
-                                </regexPropertySetting>
-                                <regexPropertySetting>
-                                    <!--
+                  <name>distribution.version</name>
+                  <value>${project.version}</value>
+                  <regex>-SNAPSHOT</regex>
+                  <replacement>SNAPSHOT</replacement>
+                  <failIfNoMatch>false</failIfNoMatch>
+                </regexPropertySetting>
+                <regexPropertySetting>
+                  <!--
                                     The product rpm package file.
                                     Example: product-name-1.1.0SNAPSHOT-1369.noarch.rpm
                                     -->
-                                    <name>distribution.package.rpm.file</name>
-                                    <value>${distribution.package.name}-${project.version}-${distribution.package.rpm.release}.noarch.rpm</value>
-                                    <regex>-SNAPSHOT</regex>
-                                    <replacement>SNAPSHOT</replacement>
-                                    <failIfNoMatch>false</failIfNoMatch>
-                                </regexPropertySetting>
-                            </regexPropertySettings>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+                  <name>distribution.package.rpm.file</name>
+                  <value>${distribution.package.name}-${project.version}-${distribution.package.rpm.release}.noarch.rpm</value>
+                  <regex>-SNAPSHOT</regex>
+                  <replacement>SNAPSHOT</replacement>
+                  <failIfNoMatch>false</failIfNoMatch>
+                </regexPropertySetting>
+              </regexPropertySettings>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
-            <plugin>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>Display build environment</id>
-                        <goals>
-                            <goal>display-info</goal>
-                        </goals>
-                        <phase>validate</phase>
-                    </execution>
-                    <execution>
-                        <id>Check build environment</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <requireJavaVersion>
-                                    <version>${compiler.java.version}</version>
-                                </requireJavaVersion>
-                                <requireMavenVersion>
-                                    <version>3.6.3</version>
-                                </requireMavenVersion>
-                                <RequirePluginVersions />
-                                <banDuplicatePomDependencyVersions />
-                            </rules>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>Check transitive dependencies are consistent</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <DependencyConvergence />
-                            </rules>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>Enforce banned dependencies</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <bannedDependencies>
-                                    <excludes>
-                                        <exclude>commons-logging:commons-logging</exclude>
-                                    </excludes>
-                                    <message>Banned dependency: commons-logging. Use jcl-over-slf4j instead.</message>
-                                </bannedDependencies>
-                                <bannedDependencies>
-                                    <excludes>
-                                        <exclude>commons-lang:commons-lang</exclude>
-                                    </excludes>
-                                    <message>Banned dependency: commons-lang. Use commons-lang3 instead.</message>
-                                </bannedDependencies>
-                            </rules>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>Check no snapshot dependencies in release builds</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <requireReleaseDeps>
-                                    <message>Should use release versions in releases</message>
-                                    <onlyWhenRelease>true</onlyWhenRelease>
-                                </requireReleaseDeps>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+      <plugin>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>Display build environment</id>
+            <goals>
+              <goal>display-info</goal>
+            </goals>
+            <phase>validate</phase>
+          </execution>
+          <execution>
+            <id>Check build environment</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireJavaVersion>
+                  <version>${compiler.java.version}</version>
+                </requireJavaVersion>
+                <requireMavenVersion>
+                  <version>3.6.3</version>
+                </requireMavenVersion>
+                <RequirePluginVersions />
+                <banDuplicatePomDependencyVersions />
+              </rules>
+            </configuration>
+          </execution>
+          <execution>
+            <id>Check transitive dependencies are consistent</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <DependencyConvergence />
+              </rules>
+            </configuration>
+          </execution>
+          <execution>
+            <id>Enforce banned dependencies</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <bannedDependencies>
+                  <excludes>
+                    <exclude>commons-logging:commons-logging</exclude>
+                  </excludes>
+                  <message>Banned dependency: commons-logging. Use jcl-over-slf4j instead.</message>
+                </bannedDependencies>
+                <bannedDependencies>
+                  <excludes>
+                    <exclude>commons-lang:commons-lang</exclude>
+                  </excludes>
+                  <message>Banned dependency: commons-lang. Use commons-lang3 instead.</message>
+                </bannedDependencies>
+              </rules>
+            </configuration>
+          </execution>
+          <execution>
+            <id>Check no snapshot dependencies in release builds</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireReleaseDeps>
+                  <message>Should use release versions in releases</message>
+                  <onlyWhenRelease>true</onlyWhenRelease>
+                </requireReleaseDeps>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>Check dependencies</id>
-                        <goals>
-                            <goal>analyze-only</goal>
-                        </goals>
-                        <phase>verify</phase>
-                        <configuration>
-                            <failOnWarning>true</failOnWarning>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>Check dependencies</id>
+            <goals>
+              <goal>analyze-only</goal>
+            </goals>
+            <phase>verify</phase>
+            <configuration>
+              <failOnWarning>true</failOnWarning>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
-            <plugin>
-                <groupId>com.github.ekryd.sortpom</groupId>
-                <artifactId>sortpom-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>Format pom-file</id>
-                        <goals>
-                            <goal>sort</goal>
-                        </goals>
-                        <phase>verify</phase>
-                    </execution>
-                </executions>
-            </plugin>
+      <plugin>
+        <groupId>com.github.ekryd.sortpom</groupId>
+        <artifactId>sortpom-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>Format pom-file</id>
+            <goals>
+              <goal>sort</goal>
+            </goals>
+            <phase>verify</phase>
+          </execution>
+        </executions>
+      </plugin>
 
-            <plugin>
-                <groupId>au.com.acegi</groupId>
-                <artifactId>xml-format-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>Format XML resources</id>
-                        <goals>
-                            <goal>xml-format</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+      <plugin>
+        <groupId>au.com.acegi</groupId>
+        <artifactId>xml-format-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>Format XML resources</id>
+            <goals>
+              <goal>xml-format</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>Attach sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>Attach sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+
+  </build>
+
+  <organization>
+    <name>${distribution.vendor.full.name}</name>
+    <url>https://github.com/tashoyan</url>
+  </organization>
+
+  <profiles>
+
+    <profile>
+
+      <id>pure-scala</id>
+      <activation>
+        <file>
+          <exists>src/main/scala</exists>
+          <missing>src/main/java</missing>
+        </file>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.scala-lang</groupId>
+          <artifactId>scala-library</artifactId>
+        </dependency>
+      </dependencies>
+
+      <build>
+        <plugins>
+
+          <plugin>
+            <groupId>com.github.tashoyan</groupId>
+            <artifactId>scalariform-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>format-scala</id>
+                <goals>
+                  <goal>format</goal>
+                </goals>
+                <phase>process-sources</phase>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.scalastyle</groupId>
+            <artifactId>scalastyle-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>scalastyle</id>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+                <phase>verify</phase>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>net.alchim31.maven</groupId>
+            <artifactId>scala-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <!--Make Scala sources available for other plugins,
+                                for example maven-source-plugin-->
+                <id>Add Scala sources to the project sources</id>
+                <goals>
+                  <goal>add-source</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>compile-scala</id>
+                <goals>
+                  <goal>compile</goal>
+                </goals>
+                <phase>compile</phase>
+              </execution>
+              <execution>
+                <id>testCompile-scala</id>
+                <goals>
+                  <goal>testCompile</goal>
+                </goals>
+                <phase>test-compile</phase>
+              </execution>
+              <execution>
+                <id>Generate Scala API doc</id>
+                <goals>
+                  <goal>doc-jar</goal>
+                </goals>
+                <configuration>
+                  <args>
+                    <arg>-no-link-warnings</arg>
+                  </args>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+              <!--No Java code - disable Java compilation-->
+              <execution>
+                <id>default-compile</id>
+                <goals>
+                  <goal>compile</goal>
+                </goals>
+                <phase>none</phase>
+              </execution>
+              <execution>
+                <id>default-testCompile</id>
+                <goals>
+                  <goal>testCompile</goal>
+                </goals>
+                <phase>none</phase>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>test-scala</id>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <executions>
+              <!--No Java code - disable Java tests-->
+              <execution>
+                <id>default-test</id>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <phase>none</phase>
+              </execution>
+            </executions>
+          </plugin>
 
         </plugins>
+      </build>
 
-    </build>
+    </profile>
 
-    <organization>
-        <name>${distribution.vendor.full.name}</name>
-        <url>https://github.com/tashoyan</url>
-    </organization>
+    <profile>
 
-    <profiles>
+      <id>pure-java</id>
+      <activation>
+        <file>
+          <exists>src/main/java</exists>
+          <missing>src/main/scala</missing>
+        </file>
+      </activation>
 
-        <profile>
+      <build>
+        <plugins>
 
-            <id>pure-scala</id>
-            <activation>
-                <file>
-                    <exists>src/main/scala</exists>
-                    <missing>src/main/java</missing>
-                </file>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>org.scala-lang</groupId>
-                    <artifactId>scala-library</artifactId>
-                </dependency>
-            </dependencies>
+          <plugin>
+            <groupId>net.revelc.code.formatter</groupId>
+            <artifactId>formatter-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>format-java</id>
+                <goals>
+                  <goal>format</goal>
+                </goals>
+                <phase>process-sources</phase>
+              </execution>
+            </executions>
+          </plugin>
 
-            <build>
-                <plugins>
+          <plugin>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>spotbugs</id>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
 
-                    <plugin>
-                        <groupId>com.github.tashoyan</groupId>
-                        <artifactId>scalariform-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>format-scala</id>
-                                <goals>
-                                    <goal>format</goal>
-                                </goals>
-                                <phase>process-sources</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-pmd-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>pmd-check</id>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>pmd-cmd-check</id>
+                <goals>
+                  <goal>cpd-check</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
 
-                    <plugin>
-                        <groupId>org.scalastyle</groupId>
-                        <artifactId>scalastyle-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>scalastyle</id>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                                <phase>verify</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>checkstyle</id>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
 
-                    <plugin>
-                        <groupId>net.alchim31.maven</groupId>
-                        <artifactId>scala-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <!--Make Scala sources available for other plugins,
-                                for example maven-source-plugin-->
-                                <id>Add Scala sources to the project sources</id>
-                                <goals>
-                                    <goal>add-source</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>compile-scala</id>
-                                <goals>
-                                    <goal>compile</goal>
-                                </goals>
-                                <phase>compile</phase>
-                            </execution>
-                            <execution>
-                                <id>testCompile-scala</id>
-                                <goals>
-                                    <goal>testCompile</goal>
-                                </goals>
-                                <phase>test-compile</phase>
-                            </execution>
-                            <execution>
-                                <id>Generate Scala API doc</id>
-                                <goals>
-                                    <goal>doc-jar</goal>
-                                </goals>
-                                <configuration>
-                                    <args>
-                                        <arg>-no-link-warnings</arg>
-                                    </args>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>Generate Java API doc</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
 
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <executions>
-                            <!--No Java code - disable Java compilation-->
-                            <execution>
-                                <id>default-compile</id>
-                                <goals>
-                                    <goal>compile</goal>
-                                </goals>
-                                <phase>none</phase>
-                            </execution>
-                            <execution>
-                                <id>default-testCompile</id>
-                                <goals>
-                                    <goal>testCompile</goal>
-                                </goals>
-                                <phase>none</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
+        </plugins>
+      </build>
 
-                    <plugin>
-                        <groupId>org.scalatest</groupId>
-                        <artifactId>scalatest-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>test-scala</id>
-                                <goals>
-                                    <goal>test</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
+    </profile>
 
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <executions>
-                            <!--No Java code - disable Java tests-->
-                            <execution>
-                                <id>default-test</id>
-                                <goals>
-                                    <goal>test</goal>
-                                </goals>
-                                <phase>none</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                </plugins>
-            </build>
-
-        </profile>
-
-        <profile>
-
-            <id>pure-java</id>
-            <activation>
-                <file>
-                    <exists>src/main/java</exists>
-                    <missing>src/main/scala</missing>
-                </file>
-            </activation>
-
-            <build>
-                <plugins>
-
-                    <plugin>
-                        <groupId>net.revelc.code.formatter</groupId>
-                        <artifactId>formatter-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>format-java</id>
-                                <goals>
-                                    <goal>format</goal>
-                                </goals>
-                                <phase>process-sources</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>com.github.spotbugs</groupId>
-                        <artifactId>spotbugs-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>spotbugs</id>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-pmd-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>pmd-check</id>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>pmd-cmd-check</id>
-                                <goals>
-                                    <goal>cpd-check</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-checkstyle-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>checkstyle</id>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>Generate Java API doc</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                </plugins>
-            </build>
-
-        </profile>
-
-    </profiles>
+  </profiles>
 
 </project>

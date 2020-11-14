@@ -1,100 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.github.tashoyan.build-infra-demo</groupId>
-        <artifactId>build-infrastructure-demo</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-    </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.github.tashoyan.build-infra-demo</groupId>
+    <artifactId>build-infrastructure-demo</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
 
-    <artifactId>java-main</artifactId>
-    <packaging>jar</packaging>
-    <name>Java Main</name>
-    <description>Dummy program written purely in Java</description>
+  <artifactId>java-main</artifactId>
+  <packaging>jar</packaging>
+  <name>Java Main</name>
+  <description>Dummy program written purely in Java</description>
 
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>scala-lib</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-        </dependency>
-        <dependency>
-            <!--Converge logging to SLF4J-->
-            <!--See here: https://www.slf4j.org/legacy.html#jcl-over-slf4j-->
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-        </dependency>
-        <dependency>
-            <!--Converge logging to SLF4J-->
-            <!--See here: https://www.slf4j.org/legacy.html#jul-to-slf4j-->
-            <groupId>org.slf4j</groupId>
-            <artifactId>jul-to-slf4j</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <!--Provide logging configuration for unit tests-->
-            <groupId>${project.groupId}</groupId>
-            <artifactId>build-resources</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>scala-lib</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+    </dependency>
+    <dependency>
+      <!--Converge logging to SLF4J-->
+      <!--See here: https://www.slf4j.org/legacy.html#jcl-over-slf4j-->
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+    </dependency>
+    <dependency>
+      <!--Converge logging to SLF4J-->
+      <!--See here: https://www.slf4j.org/legacy.html#jul-to-slf4j-->
+      <groupId>org.slf4j</groupId>
+      <artifactId>jul-to-slf4j</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <!--Provide logging configuration for unit tests-->
+      <groupId>${project.groupId}</groupId>
+      <artifactId>build-resources</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
-    <build>
+  <build>
 
-        <resources>
-            <resource>
-                <filtering>true</filtering>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
+    <resources>
+      <resource>
+        <filtering>true</filtering>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
 
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>${maven-dependency-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>Check dependencies</id>
-                            <goals>
-                                <goal>analyze-only</goal>
-                            </goals>
-                            <configuration>
-                                <ignoredUnusedDeclaredDependencies>
-                                    <!--Runtime dependencies-->
-                                    <ignoredUnusedDeclaredDependency>org.slf4j:slf4j-log4j12</ignoredUnusedDeclaredDependency>
-                                    <ignoredUnusedDeclaredDependency>org.slf4j:jcl-over-slf4j</ignoredUnusedDeclaredDependency>
-                                    <!--Dependencies used in unit tests-->
-                                    <ignoredUnusedDeclaredDependency>${project.groupId}:build-resources</ignoredUnusedDeclaredDependency>
-                                </ignoredUnusedDeclaredDependencies>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>${maven-dependency-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>Check dependencies</id>
+              <goals>
+                <goal>analyze-only</goal>
+              </goals>
+              <configuration>
+                <ignoredUnusedDeclaredDependencies>
+                  <!--Runtime dependencies-->
+                  <ignoredUnusedDeclaredDependency>org.slf4j:slf4j-log4j12</ignoredUnusedDeclaredDependency>
+                  <ignoredUnusedDeclaredDependency>org.slf4j:jcl-over-slf4j</ignoredUnusedDeclaredDependency>
+                  <!--Dependencies used in unit tests-->
+                  <ignoredUnusedDeclaredDependency>${project.groupId}:build-resources</ignoredUnusedDeclaredDependency>
+                </ignoredUnusedDeclaredDependencies>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
 
-    </build>
+  </build>
 
 </project>
