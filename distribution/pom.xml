@@ -130,7 +130,7 @@
                         <configuration>
                             <url>https://dl.bintray.com/groovy/maven/${groovy.bin.package.file}</url>
                             <outputDirectory>${project.build.directory}</outputDirectory>
-                            <md5>0effe9abcc206480212e7e2bf0239a29</md5>
+                            <md5>aa590e6cc8bae924b154ff79d796e18f</md5>
                         </configuration>
                     </execution>
                     <execution>
@@ -142,7 +142,7 @@
                         <configuration>
                             <url>https://dl.bintray.com/groovy/maven/apache-groovy-src-${groovy.version}.zip</url>
                             <outputDirectory>${rpm.opensource.dir}</outputDirectory>
-                            <md5>53cc5eb6c32b19ee8828b3a2ca9bb461</md5>
+                            <md5>fd03f32627050dd52a3ae45271ce0cde</md5>
                         </configuration>
                     </execution>
                 </executions>
