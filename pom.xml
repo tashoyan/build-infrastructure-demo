@@ -95,7 +95,7 @@
     <slf4j.version>1.7.28</slf4j.version>
 
     <build-resources.version>${project.version}</build-resources.version>
-    <spotbugs.version>4.0.1</spotbugs.version>
+    <spotbugs.version>4.1.4</spotbugs.version>
     <checkstyle.version>8.31</checkstyle.version>
 
   </properties>
