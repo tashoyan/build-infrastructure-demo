@@ -128,9 +128,9 @@
                         </goals>
                         <phase>process-resources</phase>
                         <configuration>
-                            <url>https://dl.bintray.com/groovy/maven/${groovy.bin.package.file}</url>
+                            <url>https://downloads.apache.org/groovy/${groovy.version}/distribution/${groovy.bin.package.file}</url>
                             <outputDirectory>${project.build.directory}</outputDirectory>
-                            <md5>aa590e6cc8bae924b154ff79d796e18f</md5>
+                            <sha256>eb34f4ee229b1a424adb87df5b999f66d1b1285694e5332d0800896744c2e421</sha256>
                         </configuration>
                     </execution>
                     <execution>
@@ -140,9 +140,9 @@
                         </goals>
                         <phase>process-resources</phase>
                         <configuration>
-                            <url>https://dl.bintray.com/groovy/maven/apache-groovy-src-${groovy.version}.zip</url>
+                            <url>https://downloads.apache.org/groovy/${groovy.version}/sources/apache-groovy-src-${groovy.version}.zip</url>
                             <outputDirectory>${rpm.opensource.dir}</outputDirectory>
-                            <md5>fd03f32627050dd52a3ae45271ce0cde</md5>
+                            <sha256>06bd90b4648f4be8a789903b3ed6c6d4007e8fb34c0de07b40c5adc5edec4692</sha256>
                         </configuration>
                     </execution>
                 </executions>
