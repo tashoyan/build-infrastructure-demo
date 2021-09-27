@@ -41,7 +41,7 @@ jobs:
       - name: Install OpenJDK and others
         run: |
           yum update -y
-          yum install -y java-11-openjdk-devel wget
+          yum install -y java-11-openjdk-devel wget unzip
 
       - name: Install Maven
         run: |
