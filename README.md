@@ -1,5 +1,7 @@
 # Build Infrastructure Demo
 
+[![Main](https://github.com/tashoyan/build-infrastructure-demo/actions/workflows/main.yml/badge.svg)](https://github.com/tashoyan/build-infrastructure-demo/actions/workflows/main.yml)
+
 A demo project that illustrates how to apply the `Fail Fast` approach to the build infrastructure.
 
 The project has a dummy piece of software written in two languages: Scala and Java.
