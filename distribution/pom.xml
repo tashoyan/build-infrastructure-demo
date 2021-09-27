@@ -8,7 +8,7 @@
     </parent>
 
     <artifactId>distribution</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>Distribution</name>
     <description>Distribution Package</description>
 
