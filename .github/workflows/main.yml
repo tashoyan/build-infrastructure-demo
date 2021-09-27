@@ -38,8 +38,13 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: Install OpenJDK
+        run: yum update && \
+          yum install -y java-11-openjdk-devel
+
       - name: Install Maven
-        run: yum install -y maven
-          
+        run: wget https://dlcdn.apache.org/maven/maven-3/3.8.2/binaries/apache-maven-3.8.2-bin.tar.gz -O - -P $HOME | \
+          tar -xz -C $HOME
+
       - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots clean install
+        run: $HOME/apache-maven-3.8.2/bin/mvn --batch-mode --update-snapshots clean install
