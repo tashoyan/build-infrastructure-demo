@@ -38,10 +38,10 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Install OpenJDK
+      - name: Install OpenJDK and others
         run: |
           yum update -y
-          yum install -y java-11-openjdk-devel
+          yum install -y java-11-openjdk-devel wget
 
       - name: Install Maven
         run: |
