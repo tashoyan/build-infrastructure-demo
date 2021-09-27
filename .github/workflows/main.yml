@@ -39,7 +39,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Install OpenJDK
-        run: yum update && \
+        run: yum update -y && \
           yum install -y java-11-openjdk-devel
 
       - name: Install Maven
