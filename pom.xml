@@ -87,16 +87,16 @@
 
     <groovy.version>3.0.9</groovy.version>
     <commons-lang3.version>3.12.0</commons-lang3.version>
-    <commons-io.version>2.8.0</commons-io.version>
+    <commons-io.version>2.11.0</commons-io.version>
     <junit.version>4.13.2</junit.version>
-    <scalatest.version>3.2.3</scalatest.version>
-    <scalactic.version>3.2.3</scalactic.version>
+    <scalatest.version>3.2.10</scalatest.version>
+    <scalactic.version>3.2.10</scalactic.version>
     <log4j.version>1.2.17</log4j.version>
-    <slf4j.version>1.7.28</slf4j.version>
+    <slf4j.version>1.7.32</slf4j.version>
 
     <build-resources.version>${project.version}</build-resources.version>
-    <spotbugs.version>4.1.4</spotbugs.version>
-    <checkstyle.version>8.37</checkstyle.version>
+    <spotbugs.version>4.4.1</spotbugs.version>
+    <checkstyle.version>9.0</checkstyle.version>
 
   </properties>
 
