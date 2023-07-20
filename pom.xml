@@ -51,7 +51,7 @@
     <mode.dir>0755</mode.dir>
 
     <compiler.java.version>11</compiler.java.version>
-    <compiler.scala.version>2.13.6</compiler.scala.version>
+    <compiler.scala.version>2.13.9</compiler.scala.version>
     <compiler.scala.binary.version>2.13</compiler.scala.binary.version>
 
     <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
